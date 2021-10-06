@@ -129,6 +129,7 @@ public class Application {
     OutputStream out = new FileOutputStream(file);
     OutputStreamWriter osw = new OutputStreamWriter(out, "UTF-8");
     osw.write(quote.getQuote());
+    // peut être pas nécessaire
     osw.close();
     out.close();
     /* Now write the quote into the file using Output streams.
