@@ -19,15 +19,16 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
   private int i = 0;
+  private boolean firstLine = true;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    if(c.equals("\n"))
+    c = i == 0 ? ++i + ". " + c : c;
+
+    if(c.equals("\n") || c.endsWith("\n"))
       return c + ++i + ". ";
-    else if(c.equals("\r"))
-      return  "";
-    else
-      return c;
+    else if(c.equals("\r") || c.endsWith("\r"))
+      return "";
+
+    return c;
   }
 }
