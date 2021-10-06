@@ -70,6 +70,10 @@ public class Application {
     QuoteClient client = new QuoteClient();
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
+      System.out.println("===== ATTENTION =====");
+      System.out.println(quote.getQuote());
+      System.out.println("===== FIN =====");
+
       /* TODO: There is a missing piece here!
        *  As you can see, this method handles the first part of the lab. It uses the web service
        *  client to fetch quotes. We have removed a single line from this method. It is a call to
