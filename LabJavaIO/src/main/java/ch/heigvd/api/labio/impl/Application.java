@@ -5,7 +5,10 @@ import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +106,7 @@ public class Application {
    * 
    * - with quote.getTags(), it gets a list of tags and uses
    *   it to create sub-folders (for instance, if a quote has three tags "A", "B" and
-   *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.
+   *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.)
    * 
    * - with quote.getQuote(), it has access to the text of the quote. It stores
    *   this text in UTF-8 file.
@@ -134,7 +137,8 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+    osw.write(quote.getQuote());
   }
   
   public void processQuoteFiles() throws IOException {
