@@ -140,6 +140,7 @@ public class Application {
 
     OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
     osw.write(quote.getQuote());
+    osw.close();
   }
   
   public void processQuoteFiles() throws IOException {
