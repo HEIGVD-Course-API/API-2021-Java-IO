@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -22,6 +23,12 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if(Objects.equals(c, "\r")){
+      return "";
+    }
+    else{
+      return c;
+    }
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
