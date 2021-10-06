@@ -13,8 +13,6 @@ import java.io.File;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
-        FileTransformer transformer = new FileTransformer();
-
         /* TODO: implement the logic to explore the rootDirectory.
          *  Use the Java JDK documentation to see:
          *  - how to get the files and directories of rootDirectory (which is of class File)
@@ -23,7 +21,22 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        walker(rootDirectory.toString());
+    }
 
+    public void walker(String path) {
+        File root = new File(path);
+        File[] list = root.listFiles();
+
+        if (list == null) return;
+
+        for (File f : list) {
+            if (f.isDirectory()) {
+                walker(f.getAbsolutePath());
+            } else {
+                FileTransformer transformer = new FileTransformer();
+                transformer.transform(f.getAbsoluteFile());
+            }
+        }
     }
 }
