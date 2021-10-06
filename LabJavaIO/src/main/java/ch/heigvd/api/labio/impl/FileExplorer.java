@@ -13,29 +13,18 @@ import java.io.File;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
-        /* TODO: implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - how to get the files and directories of rootDirectory (which is of class File)
-         *  - to sort the items (files and directories) alphabetically
-         *  - to check if an item is a file or a directory
-         *  For each file, call the FileTransformer (see above).
-         *  For each directory, recursively explore the directory.
-         */
-        walker(rootDirectory.toString());
-    }
+        if(!rootDirectory.exists() || !rootDirectory.isDirectory()) return;
 
-    public void walker(String path) {
-        File root = new File(path);
-        File[] list = root.listFiles();
+        FileTransformer transformer = new FileTransformer();
+        File[] FilesList = rootDirectory.listFiles();
 
-        if (list == null) return;
+        if(FilesList == null) return;
 
-        for (File f : list) {
+        for(File f : FilesList) {
             if (f.isDirectory()) {
-                walker(f.getAbsolutePath());
+                explore(f);
             } else {
-                FileTransformer transformer = new FileTransformer();
-                transformer.transform(f.getAbsoluteFile());
+                transformer.transform(f);
             }
         }
     }
