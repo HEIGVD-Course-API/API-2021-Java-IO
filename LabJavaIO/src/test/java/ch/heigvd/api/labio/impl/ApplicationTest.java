@@ -47,6 +47,7 @@ public class ApplicationTest {
         Application application = new Application();
         application.fetchAndStoreQuotes(NUMBER_OF_QUOTES);
         application.processQuoteFiles();
+        // 1st error
     }
 
     @AfterAll
