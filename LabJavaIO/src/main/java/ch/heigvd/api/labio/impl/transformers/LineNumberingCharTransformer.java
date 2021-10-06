@@ -18,10 +18,28 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private int lineNbr = 0;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    StringBuilder s = new StringBuilder();
+
+    if (lineNbr == 0) {
+      ++lineNbr;
+      s.append(lineNbr);
+      s.append(". ");
+    }
+
+    if(c.equals("\r")) {
+      s.append("");
+    } else if (c.equals("\n")){
+      ++lineNbr;
+      s.append("\n");
+      s.append(lineNbr);
+      s.append(". ");
+    } else {
+      s.append(c);
+    }
+
+    return s.toString();
   }
 }
