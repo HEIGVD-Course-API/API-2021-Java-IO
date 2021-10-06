@@ -48,7 +48,7 @@ public class ApplicationTest {
         application.fetchAndStoreQuotes(NUMBER_OF_QUOTES);
         application.processQuoteFiles();
         // 1st error
-        int workFLow;
+        int workFLo;
     }
 
     @AfterAll
