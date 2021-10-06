@@ -53,7 +53,9 @@ public class Application {
        * Step 2 : use the QuotesClient to fetch quotes; store each quote in a file
        */
       app.fetchAndStoreQuotes(numberOfQuotes);
-      
+
+
+
       /*
        * Step 3 : process the quote files, by applying 2 transformations to their content
        *          (convert to uppercase and add line numbers)
