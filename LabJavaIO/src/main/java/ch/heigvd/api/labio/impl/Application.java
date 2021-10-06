@@ -134,9 +134,12 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), "UTF-8");
-    osw.write(quote.getQuote());
-    osw.close();
+    Writer bw = new BufferedWriter(
+            new OutputStreamWriter(new FileOutputStream(filename), "UTF-8"));
+    
+    bw.write(quote.getQuote());
+    bw.flush();
+    bw.close();
   }
   
   public void processQuoteFiles() throws IOException {
