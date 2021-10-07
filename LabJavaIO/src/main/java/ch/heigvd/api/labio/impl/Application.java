@@ -4,8 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,6 +79,9 @@ public class Application {
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
 
+      // stores the content of the quote in a file with
+      storeQuote(quote,"quote-"+i+".utf-8");
+
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
@@ -128,12 +131,24 @@ public class Application {
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
 
+
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
      * TODO: There is something missing here: you have to implement writing the file
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+
+
+    // Creates an OutputStream
+    OutputStream os = new FileOutputStream(file.getAbsolutePath());
+
+    // Create an OutputStreamWriter
+    OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8);
+
+    // Write the quote in file
+    osw.write(quote.getQuote());
+    osw.close();
 
   }
   
