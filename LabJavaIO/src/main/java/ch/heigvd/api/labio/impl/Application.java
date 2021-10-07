@@ -4,8 +4,7 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,11 +78,14 @@ public class Application {
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
 
+
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
 
       }
+      String filename = "quote-" + i + ".utf8";
+      storeQuote(quote, filename);
     }
   }
   
@@ -134,6 +136,12 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+
+    //OutputStreamWriter osw = new OutputStreamWriter(new FileWriter(file), "UTF-8");
+    OutputStream       outputStream       = new FileOutputStream(file);
+    OutputStreamWriter osw = new OutputStreamWriter(outputStream, "UTF-8");
+
+    osw.write(quote.getQuote());
 
   }
   
