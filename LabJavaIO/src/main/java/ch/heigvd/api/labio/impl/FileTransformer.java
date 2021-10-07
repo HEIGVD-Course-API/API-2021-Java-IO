@@ -33,6 +33,10 @@ public class FileTransformer {
     LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
 
     try {
+      /*  TODO : ça serait mieux (sauf erreur)
+          d'utiliser des BufferedReader et BufferedWriter pour améliorer les performances !
+          Mais comment ?
+      */
       Reader is = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
       Writer os = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8);
 
