@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -12,8 +13,15 @@ public class NoOpCharTransformer {
   private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if(!c.isEmpty()){
+      c.toUpperCase();
+    }
+    else{
+      throw new UnsupportedOperationException("Empty string.");
+    }
+
+    return c;
+
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
