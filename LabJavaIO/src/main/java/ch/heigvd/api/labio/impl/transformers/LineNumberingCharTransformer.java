@@ -1,7 +1,5 @@
 package ch.heigvd.api.labio.impl.transformers;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
 import java.util.logging.Logger;
 
 /**
@@ -20,17 +18,30 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private boolean isFirstCall = true;
+  private int currentLine = 1;
 
   public String transform(String c) {
 
-    /* TODO: implement the transformation here. */
+    StringBuilder sb = new StringBuilder();
 
-    String transformedString = new String("");
-    String[] lines = c.split("\r\n");
+    if (isFirstCall) {
+      addLineNumber(sb);
+      isFirstCall = false;
+    }
 
-    for (int i = 0; i < lines.length; ++i)
-      transformedString += i + ". " + lines[i] + "\n";
+    if (!c.equals("\r")) {
+      sb.append(c);
 
-    return transformedString;
+      if (c.equals("\n")) {
+        addLineNumber(sb);
+      }
+    }
+
+    return sb.toString();
+  }
+
+  public void addLineNumber(StringBuilder sb) {
+    sb.append(currentLine++).append(". ");
   }
 }
