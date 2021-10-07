@@ -22,10 +22,8 @@ public class LineNumberingCharTransformer {
   private int nbrLignes = 0;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
     String str = ". ";
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
     if(Objects.equals(c, "\n")){
       if(nbrLignes == 0) {
         return ++nbrLignes + str + c + ++nbrLignes + str;
