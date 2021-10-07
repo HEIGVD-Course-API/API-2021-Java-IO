@@ -23,7 +23,17 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+        if(rootDirectory.exists()){
+            System.out.println("The directory exists.");
+
+        }
+        else{
+            System.out.println("The directory does not exists.");
+            //throw new UnsupportedOperationException("The directory does not exist.");
+        }
+
+        // throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }
 }
