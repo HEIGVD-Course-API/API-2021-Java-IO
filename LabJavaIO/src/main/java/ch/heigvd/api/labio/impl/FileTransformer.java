@@ -46,7 +46,7 @@ public class FileTransformer {
     try {
       Reader reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
       File output = new File(inputFile.getAbsolutePath()+".out");
-      Writer writer = new OutputStreamWriter(new FileOutputStream(output));
+      Writer writer = new OutputStreamWriter(new FileOutputStream(output),"UTF-8");
       int read = reader.read();
       UpperCaseCharTransformer upperTrans = new UpperCaseCharTransformer();
       LineNumberingCharTransformer lineNTrans = new LineNumberingCharTransformer();
