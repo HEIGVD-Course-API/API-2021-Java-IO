@@ -27,15 +27,16 @@ public class FileExplorer {
          */
 
         String[] listOfFiles = rootDirectory.list();
-        assert listOfFiles != null;
-        Arrays.sort(listOfFiles);
+        if(listOfFiles != null){
+            Arrays.sort(listOfFiles);
 
-        for(String name : listOfFiles){
-            File newfile = new File(rootDirectory.getPath() + "\\" + name);
-            if(newfile.isFile())
-                transformer.transform(newfile);
-            else if(newfile.isDirectory())
-                explore(newfile);
+            for(String name : listOfFiles){
+                File newfile = new File(rootDirectory.getPath() + "\\" + name);
+                if(newfile.isFile())
+                    transformer.transform(newfile);
+                else if(newfile.isDirectory())
+                    explore(newfile);
+            }
         }
     }
 }
