@@ -18,10 +18,20 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-
+  private Integer lineCounter = 1;
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    if (c.contains("\r")) {
+      return "";
+    }
+    if(lineCounter == 1 && c.contains("\n")){
+      return (lineCounter++).toString() + ". "+c +(lineCounter++).toString() + ". "; //add number to first line then append the char
+    }else if(lineCounter == 1){
+      return (lineCounter++).toString() + ". "+c;
+    }else if(c.contains("\n")){
+      return c+(lineCounter++).toString()+ ". ";//after the newLine, append the number
+    }else{
+      return c;             //if it's a useless char, juste return it
+    }
   }
 }
