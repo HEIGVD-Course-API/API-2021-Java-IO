@@ -5,7 +5,9 @@ import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,11 +132,10 @@ public class Application {
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
-     * TODO: There is something missing here: you have to implement writing the file
-     *   using an output stream.
-     *   Write the file with encoding UTF-8.
      */
-
+    //UTF-8 is used by default
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file));
+    osw.write(quote.getQuote());
   }
   
   public void processQuoteFiles() throws IOException {
