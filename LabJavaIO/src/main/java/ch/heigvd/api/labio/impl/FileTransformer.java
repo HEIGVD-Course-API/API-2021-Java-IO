@@ -36,7 +36,7 @@ public class FileTransformer {
     try {
 
       String outputFilePath = inputFile.getCanonicalPath() + ".out";
-      var inputStream = new InputStreamReader(new FileInputStream(inputFile), Charsets.UTF_8);
+      var inputStream = new InputStreamReader(new FileInputStream(inputFile.getCanonicalPath()), Charsets.UTF_8);
       var outputStream = new OutputStreamWriter(new FileOutputStream(outputFilePath), Charsets.UTF_8);
 
       while (inputStream.ready()) {

@@ -127,6 +127,7 @@ public class Application {
 
     var outputStream = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     outputStream.write(quote.getQuote());
+    outputStream.close();
   }
   
   public void processQuoteFiles() throws IOException {
