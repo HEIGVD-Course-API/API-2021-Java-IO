@@ -18,19 +18,22 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-    int counter = 0;
+    private int counter = 0;
 
-    public String transform(String c) {
-        if (counter == 0) {
-            if (c.equals("\n")) {
-                return printNumber() + c + printNumber();
-            } else
-                return printNumber() + c;
+    public String transform(String s) {
+        String out = "";
+        if (counter == 0) out = printNumber();
+        switch (s) {
+            case "\r":
+                break;
+            case "\n":
+                out += s + printNumber();
+                break;
+            default:
+                out += s;
+                break;
         }
-        if (c.equals("\r")) return "";
-        if (c.equals("\n")) return c + printNumber();
-        else return c;
-        //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        return out;
     }
 
     private String printNumber() {
