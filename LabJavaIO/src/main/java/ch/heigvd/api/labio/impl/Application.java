@@ -122,8 +122,7 @@ public class Application {
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
 
-    // TODO : ça serait mieux d'utiliser un Buffer pour les perfs...
-    Writer os = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+    BufferedWriter os = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), 500);
     os.write(quote.getValue().getJoke());
     os.close();
   }
