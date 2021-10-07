@@ -42,6 +42,21 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      File outputFile = new File(inputFile.getPath() + ".out");
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8");
+
+      BufferedReader r = new BufferedReader(isr);
+
+      while(r.ready()){
+        String line = r.readLine();
+
+        osw.write(transformer.transform(line + "\n"));
+      }
+
+      osw.flush();
+      isr.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
