@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +31,7 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+    NoOpCharTransformer transformer = new NoOpCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
