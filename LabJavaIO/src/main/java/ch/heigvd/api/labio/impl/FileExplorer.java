@@ -1,6 +1,9 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.util.Arrays;
+
+import static java.util.Arrays.sort;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -11,19 +14,32 @@ import java.io.File;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class FileExplorer {
+    // TODO : Discutable, pourrait être static, ou pas... ça change rien au fonctionnement
+    static FileTransformer transformer = new FileTransformer();
 
     public void explore(File rootDirectory) {
-        FileTransformer transformer = new FileTransformer();
+        // Si le File n'existe pas, sort, rien à faire
+        if (!rootDirectory.exists()) return;
 
-        /* TODO: implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - how to get the files and directories of rootDirectory (which is of class File)
-         *  - to sort the items (files and directories) alphabetically
-         *  - to check if an item is a file or a directory
-         *  For each file, call the FileTransformer (see above).
-         *  For each directory, recursively explore the directory.
-         */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        // -----------------------------------------------------------------------------
+        // Si c'est un fichier, le transforme
+        if (rootDirectory.isFile()) {
+            transformer.transform(rootDirectory);
+            return;
+        }
 
+        // -----------------------------------------------------------------------------
+        // Si c'est un dossier
+        // Liste son conteu
+        String[] children = rootDirectory.list();
+        assert children != null;
+
+        // Trie les entrées par ordre alphabétique
+        sort(children); // TODO : Pourquoi ?
+
+        // Parcours et traite les éléments
+        for (String child: children) {
+            explore(new File(rootDirectory.getAbsolutePath() + "/" + child));
+        }
     }
 }
