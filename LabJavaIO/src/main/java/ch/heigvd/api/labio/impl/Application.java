@@ -77,7 +77,8 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
-      storeQuote(quote,"quote-"+ Integer.toString(i));
+      storeQuote(quote,"quote-"+ Integer.toString(i)+".utf8");
+      //storeQuote(quote,"quote-"+ Integer.toString(i)); //This bypass the regex test theApplicationShouldUseTheCorrectSyntaxToNameTheQuoteFiles
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
@@ -134,8 +135,10 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
     Writer writer = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+    //System.out.println("Here we are : \n"+quote.getQuote());
+    //LOG.log(Level.WARNING,"We have printed a quote");
     writer.write(quote.getQuote(),0,quote.getQuote().length());
-    writer.flush();
+    writer.close();
   }
   
   public void processQuoteFiles() throws IOException {
