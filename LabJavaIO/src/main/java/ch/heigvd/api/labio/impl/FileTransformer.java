@@ -1,6 +1,9 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import org.apache.commons.io.Charsets;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +34,8 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
+    var transformer = new NoOpCharTransformer();
+
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
@@ -41,6 +46,16 @@ public class FileTransformer {
      */
     try {
 
+      String outputFileName = inputFile.getCanonicalPath() + ".out";
+      var inputStream = new InputStreamReader(new FileInputStream(inputFile), Charsets.UTF_8);
+      var outputStream = new OutputStreamWriter(new FileOutputStream(outputFileName), Charsets.UTF_8);
+
+      while (inputStream.ready()) {
+        String c = Character.toString(inputStream.read());
+        outputStream.write(transformer.transform(c));
+      }
+
+      // TODO : Copy and transform content
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }
