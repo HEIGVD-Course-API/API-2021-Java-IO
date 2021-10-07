@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 import org.apache.commons.io.Charsets;
 
 import java.io.*;
@@ -34,7 +36,8 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
-    var transformer = new NoOpCharTransformer();
+    var capitalizer = new UpperCaseCharTransformer();
+    var lineNumberer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -46,14 +49,22 @@ public class FileTransformer {
      */
     try {
 
-      String outputFileName = inputFile.getCanonicalPath() + ".out";
+      String outputFilePath = inputFile.getCanonicalPath() + ".out";
       var inputStream = new InputStreamReader(new FileInputStream(inputFile), Charsets.UTF_8);
-      var outputStream = new OutputStreamWriter(new FileOutputStream(outputFileName), Charsets.UTF_8);
+      var outputStream = new OutputStreamWriter(new FileOutputStream(outputFilePath), Charsets.UTF_8);
 
       while (inputStream.ready()) {
         String c = Character.toString(inputStream.read());
-        outputStream.write(transformer.transform(c));
+
+        // Apply transformation
+        c = capitalizer.transform(c);
+        c = lineNumberer.transform(c);
+
+        outputStream.write(c);
       }
+
+      inputStream.close();
+      outputStream.close();
 
       // TODO : Copy and transform content
     } catch (Exception ex) {
