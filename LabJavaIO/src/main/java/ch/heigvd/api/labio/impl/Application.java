@@ -4,8 +4,7 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,13 +120,11 @@ public class Application {
     // Create the output file under the new directory. Use the filename received as parameter.
     File file = new File(directory, filename);
 
-    /* Now write the quote into the file using Output streams.
+    /* Write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
-     * TODO: There is something missing here: you have to implement writing the file
-     *   using an output stream.
-     *   Write the file with encoding UTF-8.
      */
-
+    var os = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+    os.write(quote.getQuote());
   }
   
   public void processQuoteFiles() throws IOException {
