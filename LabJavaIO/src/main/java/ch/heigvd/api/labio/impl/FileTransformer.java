@@ -32,15 +32,15 @@ public class FileTransformer {
 
         try {
             String outputPath = inputFile.getCanonicalPath() + ".out";
-            var inputStream = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
-            var outputStream = new OutputStreamWriter(new FileOutputStream(outputPath), "UTF-8");
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputPath), "UTF-8");
 
-            while (inputStream.ready()) {
-                String s = Character.toString(inputStream.read());
-                outputStream.write(transformer2.transform(transformer1.transform(s)));
+            while (isr.ready()) {
+                String s = Character.toString(isr.read());
+                osw.write(transformer2.transform(transformer1.transform(s)));
             }
-            inputStream.close();
-            outputStream.close();
+            isr.close();
+            osw.close();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
         }
