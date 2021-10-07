@@ -19,9 +19,18 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
+  private int lineNumber = 1;
+
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    StringBuilder sb = new StringBuilder();
+
+    if(lineNumber == 1)
+      sb.append(lineNumber++).append(". ");
+    if(!c.equals("\r"))
+      sb.append(c);
+    if(c.equals("\n"))
+      sb.append(lineNumber++).append(". ");
+
+    return sb.toString();
   }
 }
