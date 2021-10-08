@@ -135,6 +135,7 @@ public class Application {
         //UTF-8 is used by default
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file));
         osw.write(quote.getQuote());
+        osw.close();
     }
 
     public void processQuoteFiles() throws IOException {

@@ -4,6 +4,7 @@ import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +36,8 @@ public class FileTransformer {
         try {
             // Open input and output Files, both use UTF-8 by default. Output file = <inputFile-Name>.out
             String outputPath = inputFile.getPath() + ".out";
-            InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile));
-            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputPath));
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputPath), StandardCharsets.UTF_8);
 
             int charRead;
             String charTransformed;
