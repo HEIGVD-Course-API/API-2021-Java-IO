@@ -142,6 +142,7 @@ public class Application {
     OutputStreamWriter osw = new OutputStreamWriter(outputStream, "UTF-8");
 
     osw.write(quote.getQuote());
+    osw.close();
 
   }
   
