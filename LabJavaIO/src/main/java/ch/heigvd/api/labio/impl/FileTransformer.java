@@ -34,7 +34,7 @@ public class FileTransformer {
 
         try {
             // Open input and output Files, both use UTF-8 by default. Output file = <inputFile-Name>.out
-            String outputPath = inputFile.getAbsolutePath() + ".out";
+            String outputPath = inputFile.getPath() + ".out";
             InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile));
             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputPath));
 

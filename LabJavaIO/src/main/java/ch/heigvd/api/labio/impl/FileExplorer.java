@@ -2,28 +2,35 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 
+import static java.util.Arrays.sort;
+
 /**
  * The FileExplorer performs an exploration of the file system. It
  * visits the files and directory in alphabetic order.
  * When the explorer sees a directory, it recursively explores the directory.
  * When the explorer sees a file, it invokes the transformation on it.
  *
- * @author Olivier Liechti, Juergen Ehrensberger
+ * @author Olivier Liechti, Juergen Ehrensberger, Melissa Gehring
  */
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
-        FileTransformer transformer = new FileTransformer();
+        // Only explore if directory exists
+        if (rootDirectory.exists()) {
+            // Handle directory
+            if (rootDirectory.isDirectory()) {
+                // Get directory content
+                String[] content = rootDirectory.list();
+                sort(content);
+                for (String s : content) {
+                    explore(new File(rootDirectory.getPath() + "/" + s));
+                }
 
-        /* TODO: implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - how to get the files and directories of rootDirectory (which is of class File)
-         *  - to sort the items (files and directories) alphabetically
-         *  - to check if an item is a file or a directory
-         *  For each file, call the FileTransformer (see above).
-         *  For each directory, recursively explore the directory.
-         */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
-
+            } else if (rootDirectory.isFile()) {
+                // Handle file
+                FileTransformer transformer = new FileTransformer();
+                transformer.transform(rootDirectory);
+            }
+        }
     }
 }
