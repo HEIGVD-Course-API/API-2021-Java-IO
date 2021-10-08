@@ -18,17 +18,15 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-  private boolean isFirstCall = true;
-  private int currentLine = 1;
+  private int currentLine = 0;
 
   public String transform(String c) {
 
     StringBuilder sb = new StringBuilder();
 
-    if (isFirstCall) {
+    if (currentLine == 0)
       addLineNumber(sb);
-      isFirstCall = false;
-    }
+
 
     if (!c.equals("\r")) {
       sb.append(c);
@@ -42,6 +40,6 @@ public class LineNumberingCharTransformer {
   }
 
   public void addLineNumber(StringBuilder sb) {
-    sb.append(currentLine++).append(". ");
+    sb.append(++currentLine).append(". ");
   }
 }
