@@ -14,8 +14,6 @@ import static java.util.Arrays.sort;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class FileExplorer {
-    // TODO : Discutable, pourrait être static, ou pas... ça change rien au fonctionnement
-    static FileTransformer transformer = new FileTransformer();
 
     public void explore(File rootDirectory) {
         // Si le File n'existe pas, sort, rien à faire
@@ -24,6 +22,7 @@ public class FileExplorer {
         // -----------------------------------------------------------------------------
         // Si c'est un fichier, le transforme
         if (rootDirectory.isFile()) {
+            FileTransformer transformer = new FileTransformer();
             transformer.transform(rootDirectory);
             return;
         }
@@ -35,7 +34,8 @@ public class FileExplorer {
         assert children != null;
 
         // Trie les entrées par ordre alphabétique
-        sort(children); // TODO : Pourquoi ?
+        // Cette ligne sert à assurer un comportement régulier et cohérent entre chaque OS !
+        sort(children);
 
         // Parcours et traite les éléments
         for (String child: children) {
