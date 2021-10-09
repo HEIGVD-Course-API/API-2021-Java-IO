@@ -43,7 +43,7 @@ public class FileExplorer {
             }
         }
         catch (Exception ex){
-
+            System.err.println("Exception: " + ex.getMessage());
         }
     }
 }
