@@ -47,9 +47,9 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
 
-    LineNumberingCharTransformer LNCT = new LineNumberingCharTransformer();
-    NoOpCharTransformer NOT = new NoOpCharTransformer();
-    UpperCaseCharTransformer UCT = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lnct = new LineNumberingCharTransformer();
+    NoOpCharTransformer not = new NoOpCharTransformer();
+    UpperCaseCharTransformer uct = new UpperCaseCharTransformer();
 
     try {
 
@@ -60,8 +60,8 @@ public class FileTransformer {
       int content ;
 
       while ((content = isr.read()) != -1) {
-        NOT.transform(Character.toString((char)content));
-        osw.write(LNCT.transform(UCT.transform(Character.toString((char)content))));
+        not.transform(Character.toString((char)content));
+        osw.write(lnct.transform(uct.transform(Character.toString((char)content))));
       }
 
       isr.close();

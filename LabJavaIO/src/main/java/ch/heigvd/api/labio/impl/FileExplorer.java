@@ -1,6 +1,9 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -12,6 +15,8 @@ import java.io.File;
  */
 public class FileExplorer {
 
+
+    private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
 
@@ -23,7 +28,27 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+        try {
+            if (rootDirectory != null) {
+
+                File[] files = rootDirectory.listFiles();
+
+                if (files == null) return;
+                Arrays.sort(files);
+
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        explore(file);
+                    } else {
+                        transformer.transform(file);
+                    }
+                }
+            }
+        }catch (Exception ex){
+            LOG.log(Level.SEVERE, "Error while reading, writing or exploring directory.", ex);
+        }
+      //  throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }
 }
