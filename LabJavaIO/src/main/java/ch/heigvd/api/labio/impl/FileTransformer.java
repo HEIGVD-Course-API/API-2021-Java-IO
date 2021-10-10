@@ -1,6 +1,7 @@
 package ch.heigvd.api.labio.impl;
 
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,7 +39,7 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
-    NoOpCharTransformer transformer = new NoOpCharTransformer();
+    UpperCaseCharTransformer transformer = new UpperCaseCharTransformer();
 
 
     /* TODO: implement the following logic here:
