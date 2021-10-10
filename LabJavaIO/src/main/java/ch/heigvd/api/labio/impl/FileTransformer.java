@@ -1,8 +1,13 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  * This class transforms files. The transform method receives an inputFile.
@@ -11,9 +16,11 @@ import java.util.logging.Logger;
  *
  * @author Juergen Ehrensberger
  */
+
 public class FileTransformer {
   private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
 
+  String encoding = "UTF-8";
   public void transform(File inputFile) {
     /*
      * This method opens the given inputFile and copies the
@@ -39,7 +46,26 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+
+    LineNumberingCharTransformer LNCT = new LineNumberingCharTransformer();
+    NoOpCharTransformer NOT = new NoOpCharTransformer();
+    UpperCaseCharTransformer UCT = new UpperCaseCharTransformer();
+
     try {
+
+      File outputFile = new File(inputFile + ".out");
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), encoding);
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), encoding);
+
+      int content ;
+
+      while ((content = isr.read()) != -1) {
+        NOT.transform(Character.toString((char)content));
+        osw.write(LNCT.transform(UCT.transform(Character.toString((char)content))));
+      }
+
+      isr.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
