@@ -24,26 +24,26 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    StringBuilder output = new StringBuilder();
+    String output;
 
     c = c.replace("\r","");
     if (c.compareTo("\n") == 0) {
       if (flag == 0) {
-        output.append("\n" + line_number++ + ". ");
+        output = "\n" + line_number++ + ". ";
       } else {
-        output.append(line_number++ + ". " + "\n" + line_number++ + ". ");
+        output = line_number++ + ". " + "\n" + line_number++ + ". ";
         flag = 0;
       }
     } else {
       if (flag == 1) {
-        output.append(line_number++ + ". " + c);
+        output = line_number++ + ". " + c ;
         flag = 0;
       } else {
-        output.append(c);
+        output = c;
       }
     }
 
-    return output.toString();
+    return output;
   //  throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
