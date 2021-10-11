@@ -64,9 +64,9 @@ public class FileTransformer {
       }
 
       isr.close();
-      osw.close();F
+      osw.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }
   }
-}F
+}
