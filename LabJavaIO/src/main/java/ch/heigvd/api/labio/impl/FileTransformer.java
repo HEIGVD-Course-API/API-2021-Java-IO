@@ -69,4 +69,4 @@ public class FileTransformer {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }
   }
-}
+}F
