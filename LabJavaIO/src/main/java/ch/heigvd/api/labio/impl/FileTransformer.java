@@ -1,6 +1,15 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +40,10 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
+    NoOpCharTransformer noTransformer = new NoOpCharTransformer();
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumTransformer = new LineNumberingCharTransformer();
+
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
@@ -41,6 +54,17 @@ public class FileTransformer {
      */
     try {
 
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), "UTF-8");
+
+      int c ;
+      while ((c=isr.read()) != -1){
+        noTransformer.transform(Character.toString((char)c));
+        osw.write(lineNumTransformer.transform(upperTransformer.transform(Character.toString((char)c))));
+      }
+
+      isr.close();
+      osw.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }
