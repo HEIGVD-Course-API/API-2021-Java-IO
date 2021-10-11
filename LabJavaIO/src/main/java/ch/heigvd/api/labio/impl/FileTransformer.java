@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,13 +29,11 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
+
+
     // ... transformer = ...
 
-    /* TODO: implement the following logic here:
+    /* implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
      *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
@@ -40,6 +42,25 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      InputStreamReader inputSrc = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+
+      String outputFile = inputFile.getPath() + ".out";
+      OutputStreamWriter outputSrc = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      LineNumberingCharTransformer transformerLine = new LineNumberingCharTransformer();
+      UpperCaseCharTransformer transformerChar = new UpperCaseCharTransformer();
+
+      int r;
+      char ch;
+
+      //need to convert int to char to string
+      while ((r = inputSrc.read()) != -1) {
+        ch = (char) r;
+        outputSrc.write(transformerLine.transform(transformerChar.transform(String.valueOf(ch))));
+      }
+
+      outputSrc.close();
+      inputSrc.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
