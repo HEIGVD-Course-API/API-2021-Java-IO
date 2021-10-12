@@ -95,7 +95,7 @@ public class Application {
    * @throws IOException 
    */
   void clearOutputDirectory() throws IOException {
-    FileUtils.deleteDirectory(new File(WORKSPACE_DIRECTORY));    
+    FileUtils.deleteDirectory(new File(WORKSPACE_DIRECTORY));
   }
 
   /**

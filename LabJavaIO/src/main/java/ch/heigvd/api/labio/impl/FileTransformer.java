@@ -53,7 +53,7 @@ public class FileTransformer {
 
       int c = isr.read();
       while(c != -1){
-        String s = Integer.toString(c);
+        String s = Character.toString((char)c);
         s = lineTransformer.transform(s);
         s = upperTransformer.transform(s);
         output.append(s);
