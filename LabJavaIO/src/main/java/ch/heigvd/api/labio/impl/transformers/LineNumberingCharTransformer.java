@@ -19,9 +19,30 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
+  // OK, mais problème avec le static
+  private static int counter = 0;
+  private static boolean isNewLine = true;
+
+  private String getNextNumber(){
+    return ++counter + ". ";
+  }
+
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String s = "";
+    if(isNewLine){
+      isNewLine = false;
+      s += getNextNumber();
+    }
+
+    s += c;
+
+    if(s.contains("\r")){
+      s = s.replaceAll("\r", "");
+    }
+    else if (c.contains("\n")){
+      isNewLine = true;
+      s += getNextNumber();
+    }
+    return s;
   }
 }
