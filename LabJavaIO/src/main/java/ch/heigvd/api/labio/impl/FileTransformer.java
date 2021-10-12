@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -31,7 +33,8 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    NoOpCharTransformer transformer = new NoOpCharTransformer();
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -46,13 +49,19 @@ public class FileTransformer {
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8");
 
-      BufferedReader r = new BufferedReader(isr);
+      StringBuilder output = new StringBuilder();
 
-      while(r.ready()){
-        String line = r.readLine();
+      int c = isr.read();
+      while(c != -1){
+        String s = Integer.toString(c);
+        s = lineTransformer.transform(s);
+        s = upperTransformer.transform(s);
+        output.append(s);
 
-        osw.write(transformer.transform(line + "\n"));
+        c = isr.read();
       }
+
+      osw.write(output.toString());
 
       osw.flush();
       isr.close();
