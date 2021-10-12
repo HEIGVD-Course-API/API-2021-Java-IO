@@ -19,9 +19,8 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
-  // OK, mais problème avec le static
-  private static int counter = 0;
-  private static boolean isNewLine = true;
+  private int counter = 0;
+  private boolean isNewLine = true;
 
   private String getNextNumber(){
     return ++counter + ". ";
@@ -40,7 +39,6 @@ public class LineNumberingCharTransformer {
       s = s.replaceAll("\r", "");
     }
     else if (c.contains("\n")){
-      isNewLine = true;
       s += getNextNumber();
     }
     return s;
