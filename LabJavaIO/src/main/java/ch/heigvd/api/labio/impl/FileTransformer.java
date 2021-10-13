@@ -30,30 +30,18 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
-
     try {
+      // File streams
       FileInputStream fileInputStream = new FileInputStream(inputFile);
       InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
       OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
-      int charCode;
+
+      // Transformers
       NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
       UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
       LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
+
+      int charCode;
       while((charCode = inputStreamReader.read()) != -1){
         String s = lineNumberingCharTransformer.transform(
                       upperCaseCharTransformer.transform(
@@ -62,6 +50,7 @@ public class FileTransformer {
           outputStreamWriter.write(s.charAt(i));
         }
       }
+      // Close files
       outputStreamWriter.close();
       inputStreamReader.close();
       fileInputStream.close();
