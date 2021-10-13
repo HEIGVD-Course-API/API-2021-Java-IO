@@ -73,7 +73,7 @@ public class Application {
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
 
-      storeQuote(quote, "quote" + i + ".utf8");
+      storeQuote(quote, "quote-" + i + ".utf8");
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
@@ -106,19 +106,19 @@ public class Application {
    * 
    * @param quote the quote object, with tags and text
    * @param filename the name of the file to create and where to store the quote text
-   * @throws IOException 
+   * @throws IOException
    */
   void storeQuote(Quote quote, String filename) throws IOException {
     // Create the directory path by concatenating the tags from quote, with a slash between the tags
     List<String> tags = quote.getTags();
-    String path = WORKSPACE_DIRECTORY;
+    StringBuilder path = new StringBuilder(WORKSPACE_DIRECTORY);
     for(String tag : tags) {
-      path += "/" + tag;
+      path.append("/").append(tag);
     }
-    path += "/";
+    path.append("/");
 
     // Create directory. Does nothing if the directory already exists.
-    File directory = new File(path);
+    File directory = new File(path.toString());
     directory.mkdirs();
 
     // Create the output file under the new directory. Use the filename received as parameter.
