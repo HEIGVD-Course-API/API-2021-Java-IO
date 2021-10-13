@@ -37,11 +37,6 @@ public class FileTransformer {
 
     UpperCaseCharTransformer transformerUpperCase = new UpperCaseCharTransformer();
     LineNumberingCharTransformer transformerLine = new LineNumberingCharTransformer();
-  /*StringBuilder output = new StringBuilder();
-    for (int i=0; i<input.length(); i++) {
-      String s = Character.toString(input.charAt(i));
-      output.append(transformer2.transform(transformer1.transform(s)));
-    }//*/
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
