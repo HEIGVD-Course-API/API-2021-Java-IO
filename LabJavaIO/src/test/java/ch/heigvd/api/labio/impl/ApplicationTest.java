@@ -37,7 +37,7 @@ public class ApplicationTest {
 
     private static void deleteDirectory() throws IOException {
         String rootDirectory = Application.WORKSPACE_DIRECTORY;
-        FileUtils.deleteDirectory(new File(rootDirectory));
+        FileUtils.forceDelete(new File(rootDirectory));
     }
 
     @BeforeAll
