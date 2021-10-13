@@ -26,12 +26,13 @@ public class LineNumberingCharTransformer {
     if (number == 0) {
       st = ++number + ". ";
     }
+    st += c;
     if (Objects.equals(c, "\r")){
       return "";
     } else if (Objects.equals(c, "\n")){
-      return st += "\n"+ ++number + ". ";
+      st += ++number + ". ";
     }
-    return st += c;
+    return st;
 
   }
 }
