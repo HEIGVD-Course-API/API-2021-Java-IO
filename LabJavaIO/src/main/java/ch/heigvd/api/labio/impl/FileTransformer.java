@@ -36,7 +36,7 @@ public class FileTransformer {
       LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
 
       isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
-      osw = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
+      osw = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8);
 
       int readChar = isr.read();
       while (readChar != -1) {
