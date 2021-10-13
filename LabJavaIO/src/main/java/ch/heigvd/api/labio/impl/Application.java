@@ -71,15 +71,6 @@ public class Application {
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
 
-      /* TODO: There is a missing piece here!
-       *  As you can see, this method handles the first part of the lab. It uses the web service
-       *  client to fetch quotes. We have removed a single line from this method. It is a call to
-       *  one method provided by this class, which is responsible for storing the content of the
-       *  quote in a text file (and for generating the directories based on the tags).
-       *  Add the missing line which stores the content of the quote in a file with
-       *  the name "quote-i.utf8" where 'i' is the number of the file.
-       */
-
       storeQuote(quote,"quote-" + i + ".utf8");
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
@@ -138,9 +129,6 @@ public class Application {
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
-     * TODO: There is something missing here: you have to implement writing the file
-     *   using an output stream.
-     *   Write the file with encoding UTF-8.
      */
 
   }
