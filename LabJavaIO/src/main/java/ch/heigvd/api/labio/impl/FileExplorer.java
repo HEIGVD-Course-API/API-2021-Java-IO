@@ -15,6 +15,10 @@ public class FileExplorer {
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
 
+        if(!rootDirectory.exists()){
+            return;
+        }
+
         /* TODO: implement the logic to explore the rootDirectory.
          *  Use the Java JDK documentation to see:
          *  - how to get the files and directories of rootDirectory (which is of class File)
@@ -23,7 +27,17 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+        File fileList[] = rootDirectory.listFiles();
+
+        for(File file : fileList){
+            if(file.isDirectory()) {
+                explore(file);
+            }else if(file.isFile()){
+                transformer.transform(file);
+            }
+        }
+
+        //throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }
 }
