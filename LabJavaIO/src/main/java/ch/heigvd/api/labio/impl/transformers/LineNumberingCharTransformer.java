@@ -2,6 +2,9 @@ package ch.heigvd.api.labio.impl.transformers;
 
 import java.util.logging.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class applies a transformation to the input character (a string with a single character):
  *   1. Convert all line endings to Unix-style line endings, i.e. only '\n'.
@@ -17,11 +20,31 @@ import java.util.logging.Logger;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class LineNumberingCharTransformer {
-  private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private static final Logger LOG = Logger.getLogger(LineNumberingCharTransformer.class.getName());
+
+  private int lineNbr = 1;
+  private boolean isFront = true;
 
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String ret = c;
+    if(isFront){
+      isFront = false;
+      ret = lineNbr + ". " + ret;
+    }
+
+    if(c.equals("\n")){
+      ++lineNbr;
+      ret += lineNbr + ". ";
+    }else if(c.equals("\r")){
+      ret = "";
+    }
+
+    return ret;
+
+
+
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
