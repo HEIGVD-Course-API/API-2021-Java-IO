@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
+import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -25,15 +29,20 @@ public class FileExplorer {
          */
 
         if(rootDirectory.exists()){
-            System.out.println("The directory exists.");
-
+            File[] files = rootDirectory.listFiles();
+            Arrays.sort(files);
+            for(File file : files){
+                if(file.isDirectory()){
+                    explore(file);
+                } else{
+                    try {
+                        transformer.transform(file);
+                    }
+                    catch(FileNotFoundException ex){
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }
         }
-        else{
-            System.out.println("The directory does not exists.");
-            //throw new UnsupportedOperationException("The directory does not exist.");
-        }
-
-        // throw new UnsupportedOperationException("The student has not implemented this method yet.");
-
     }
 }
