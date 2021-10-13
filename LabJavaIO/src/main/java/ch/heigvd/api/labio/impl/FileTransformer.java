@@ -36,10 +36,10 @@ public class FileTransformer {
 
     // ... transformer = ...
 
-    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
-    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
-
     try {
+      LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
+      UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
 
       String filename = inputFile.getName() + ".out";
@@ -48,13 +48,12 @@ public class FileTransformer {
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
 
 
-      int r = isr.read();
-      while(r != -1){
+      int r;
+      while((r = isr.read()) != -1){
         osw.write(upperTransformer.transform(lineTransformer.transform(Character.toString((char) r))));
-        r = isr.read();
       }
-
       isr.close();
+
       osw.flush();
       osw.close();
     } catch (Exception ex) {

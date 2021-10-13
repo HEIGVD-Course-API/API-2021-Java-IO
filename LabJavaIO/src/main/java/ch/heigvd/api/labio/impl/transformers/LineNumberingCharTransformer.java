@@ -39,6 +39,5 @@ public class LineNumberingCharTransformer {
       return "";
     }
     return reformat;
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
