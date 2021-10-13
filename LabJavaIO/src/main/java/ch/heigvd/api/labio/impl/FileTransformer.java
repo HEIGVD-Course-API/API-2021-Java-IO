@@ -58,6 +58,7 @@ public class FileTransformer {
         outChar = LineTrans.transform(outChar);
         out.write(outChar);
       }
+      in.close();
       out.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
