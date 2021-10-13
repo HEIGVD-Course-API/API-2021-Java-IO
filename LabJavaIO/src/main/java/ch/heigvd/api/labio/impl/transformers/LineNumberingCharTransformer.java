@@ -1,5 +1,7 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import org.glassfish.jersey.message.internal.StringBuilderUtils;
+
 import java.util.logging.Logger;
 
 /**
@@ -19,9 +21,27 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
+  private int lineNumber = 1;
+
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+    if (c.contains("\r"))
+      return "";
+
+    if (lineNumber == 1)
+    {
+      c = lineNumber + ". " + c;
+      lineNumber++;
+    }
+
+    if (c.contains("\n"))
+    {
+      c += lineNumber + ". ";
+      lineNumber++;
+    }
+
+    return c;
   }
 }
