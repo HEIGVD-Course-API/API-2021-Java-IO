@@ -23,7 +23,15 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
-        throw new UnsupportedOperationException("The student has not implemented this method yet.");
+
+        if (rootDirectory.isFile()) transformer.transform(rootDirectory);
+        else if (rootDirectory.isDirectory()) {
+            File filesDirectories[] = rootDirectory.listFiles();
+            for (File file: filesDirectories) {
+                explore(file);
+            }
+        }
+        //throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }
 }
