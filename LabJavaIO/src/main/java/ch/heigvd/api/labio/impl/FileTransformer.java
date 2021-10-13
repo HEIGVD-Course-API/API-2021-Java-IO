@@ -30,25 +30,19 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
     UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
     LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
-
-    try {
-
-      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
-
-      File file = new File(inputFile.getParent(),inputFile.getName() + ".out");
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-
+    try (
+            InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile),
+                    StandardCharsets.UTF_8);
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getPath() + ".out"),
+                    StandardCharsets.UTF_8);
+    ){
       int b;
       while((b = isr.read()) != -1){
         String s = Character.toString((char)b);
         osw.write(lineNumberingCharTransformer.transform(upperCaseCharTransformer.transform(s)));
       }
-      isr.close();
-      osw.flush();
-      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
