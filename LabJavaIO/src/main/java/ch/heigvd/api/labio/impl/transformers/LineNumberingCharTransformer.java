@@ -20,8 +20,6 @@ public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
   private int counter = 0;
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
     if (counter == 0)
       c = ++counter + ". " + c;
 

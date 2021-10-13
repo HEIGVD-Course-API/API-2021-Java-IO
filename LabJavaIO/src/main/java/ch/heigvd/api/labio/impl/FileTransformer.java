@@ -5,6 +5,7 @@ import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,30 +29,16 @@ public class FileTransformer {
      * Before writing each character to the output file, the transformer calls
      * a character transformer to transform the character before writing it to the output.
      */
-
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
-    var noOpTransformer = new NoOpCharTransformer();
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
+    Reader br = null;
+    Writer bw = null;
     try {
-      Reader br = new BufferedReader(
-              new InputStreamReader(new FileInputStream(inputFile.toString()), "UTF-8"));
+      br = new BufferedReader(
+              new InputStreamReader(new FileInputStream(inputFile.toString()), StandardCharsets.UTF_8));
 
-      Writer bw = new BufferedWriter(
-              new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), "UTF-8"));
+      bw = new BufferedWriter(
+              new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8));
 
+      var noOpTransformer = new NoOpCharTransformer();
       var upperCaseTransformer = new UpperCaseCharTransformer();
       var lineNbTransformer = new LineNumberingCharTransformer();
 
@@ -64,11 +51,23 @@ public class FileTransformer {
 
         bw.write(singleChar);
       }
-      br.close();
-      bw.flush();
-      bw.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+    } finally {
+      try {
+        if (br != null)
+          br.close();
+      } catch (Exception ex) {
+        LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+      }
+      try {
+        if (bw != null) {
+          bw.flush();
+          bw.close();
+        }
+      } catch (Exception ex) {
+        LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+      }
     }
   }
 }
