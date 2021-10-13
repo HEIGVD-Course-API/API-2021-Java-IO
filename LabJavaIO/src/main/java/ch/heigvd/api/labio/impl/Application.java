@@ -134,8 +134,22 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-    OutputStreamWriter outputStream = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-    outputStream.write(quote.getQuote());
+    OutputStreamWriter outputStream = null;
+    try{
+      outputStream = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+      outputStream.write(quote.getQuote());
+    }
+    catch(Exception ex){
+      LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+    }
+    finally {
+      try{
+        outputStream.close();
+      }
+      catch(IOException ex){
+        LOG.log(Level.SEVERE, "Error while closing stream.", ex);
+      }
+    }
   }
   
   public void processQuoteFiles() throws IOException {
