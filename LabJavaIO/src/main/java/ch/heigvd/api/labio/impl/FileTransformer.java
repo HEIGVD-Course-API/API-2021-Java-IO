@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
@@ -39,7 +40,7 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
-    UpperCaseCharTransformer transformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer transformer = new LineNumberingCharTransformer();
 
 
     /* TODO: implement the following logic here:
@@ -57,11 +58,11 @@ public class FileTransformer {
       File outputFile = new File(inputFile.getParent(), filename);
 
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
-      String s = outputFile.getPath();
+
+
       int r = osr.read();
       while(r != -1){
         osw.write(transformer.transform(Character.toString((char) r)));
-        osw.flush();
         r = osr.read();
       }
       osw.flush();
