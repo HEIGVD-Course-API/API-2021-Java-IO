@@ -14,7 +14,18 @@ public class FileExplorer {
 
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
-       // rootDirectory.listFiles();
+
+        for (final File fileEntry : rootDirectory.listFiles()) {
+
+            if (fileEntry.isDirectory()) {
+                    explore(fileEntry);
+            } else if(fileEntry.isFile()) {
+                transformer.transform(fileEntry);
+            } else {
+                return;
+            }
+        }
+
 
         /* TODO: implement the logic to explore the rootDirectory.
          *  Use the Java JDK documentation to see:

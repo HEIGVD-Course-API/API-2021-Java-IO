@@ -1,8 +1,15 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.OutputStreamWriter;
+
 
 /**
  * This class transforms files. The transform method receives an inputFile.
@@ -29,7 +36,9 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+      NoOpCharTransformer transformer = new NoOpCharTransformer();
+
+
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -39,7 +48,30 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+
+
+
     try {
+      // Crée un flux d'entrée pour lire un fichier texte
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+
+      // Crée un fichier de sortie pour écrire le contenu du fichier lu
+      File outputFile = new File(inputFile.getAbsolutePath() + ".out");
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      // Ecrit dans le fichier de sortie et effectue les transformations demandées sur chaque caractère
+      int b;
+      UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
+      LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
+      while ( (b = isr.read()) != -1 ) {
+        osw.write(transformer.transform(Character.toString((char)b)));
+        osw.write(transformer1.transform(Character.toString((char)b)));
+        osw.write(transformer2.transform(Character.toString((char)b)));
+      }
+
+
+      osw.close();
+      isr.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
