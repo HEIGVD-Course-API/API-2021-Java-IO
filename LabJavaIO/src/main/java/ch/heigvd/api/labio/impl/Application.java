@@ -78,6 +78,9 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
+      String filename = "quote-"+ i +".utf8";
+      storeQuote(quote, filename);
+
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
@@ -134,6 +137,8 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), "UTF-8" )
 
   }
   
