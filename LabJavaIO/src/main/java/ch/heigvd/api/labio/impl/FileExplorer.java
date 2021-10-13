@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -23,6 +25,10 @@ public class FileExplorer {
          *  For each file, call the FileTransformer (see above).
          *  For each directory, recursively explore the directory.
          */
+
+        String directoryContent[] = rootDirectory.list();
+
+
         throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }

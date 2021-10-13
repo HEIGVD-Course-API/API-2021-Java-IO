@@ -6,9 +6,12 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
 
 /**
  *
@@ -138,7 +141,9 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
 
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), "UTF-8" )
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8 );
+    osw.write(filename);
+    osw.close();
 
   }
   
