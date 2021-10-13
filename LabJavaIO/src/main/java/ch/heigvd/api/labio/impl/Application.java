@@ -139,8 +139,9 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
 
-    FileOutputStream osw = new FileOutputStream(file);
-    osw.write(quote.getQuote().getBytes(StandardCharsets.UTF_8));
+    OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+    outputStreamWriter.write(quote.getQuote());
+    outputStreamWriter.close();
   }
   
   public void processQuoteFiles() throws IOException {

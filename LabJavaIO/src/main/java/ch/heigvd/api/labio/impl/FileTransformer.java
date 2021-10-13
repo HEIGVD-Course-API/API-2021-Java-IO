@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -43,11 +45,26 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+
     try {
-      Reader reader = new InputStreamReader(new FileInputStream (inputFile), StandardCharsets.UTF_8);
-      FileInputStream isr = new FileInputStream(inputFile);
-      FileOutputStream osw = new FileOutputStream(inputFile + ".out");
-      osw.write(isr.read());
+      FileInputStream fileInputStream = new FileInputStream(inputFile);
+      InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+      OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
+      int charCode;
+      NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
+      UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+      LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
+      while((charCode = inputStreamReader.read()) != -1){
+        String s = lineNumberingCharTransformer.transform(
+                      upperCaseCharTransformer.transform(
+                          noOpCharTransformer.transform(String.valueOf((char)charCode))));
+        for(int i = 0; i < s.length(); ++i){
+          outputStreamWriter.write(s.charAt(i));
+        }
+      }
+      outputStreamWriter.close();
+      inputStreamReader.close();
+      fileInputStream.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
