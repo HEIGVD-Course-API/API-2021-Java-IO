@@ -6,14 +6,17 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.io.FileWriter;
+
 /**
  *
  * @author Olivier Liechti
- */ 
+ */
 public class Application {
 
   /**
@@ -78,6 +81,8 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
+      storeQuote(quote, "quote-" + i + ".utf8");
+
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
@@ -134,6 +139,7 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+    new FileWriter(file, Charset.forName("UTF-8")).write(quote.getQuote());
 
   }
   
