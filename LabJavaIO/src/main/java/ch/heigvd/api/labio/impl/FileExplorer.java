@@ -2,6 +2,7 @@ package ch.heigvd.api.labio.impl;
 
 import java.io.File;
 import java.util.Arrays;
+import ch.heigvd.api.labio.impl.FileTransformer;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -28,7 +29,6 @@ public class FileExplorer {
             }
 
         }
-        //throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
     }
 }
