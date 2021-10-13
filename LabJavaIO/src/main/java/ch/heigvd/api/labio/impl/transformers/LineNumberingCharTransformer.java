@@ -22,9 +22,6 @@ public class LineNumberingCharTransformer {
   private int cnt = 0;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-
     StringBuilder result = new StringBuilder();
 
     if(cnt == 0)
@@ -39,6 +36,5 @@ public class LineNumberingCharTransformer {
     }
 
     return result.toString();
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
