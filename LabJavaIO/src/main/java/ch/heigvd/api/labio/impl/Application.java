@@ -134,6 +134,7 @@ public class Application {
     OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     osw.write(quote.getQuote());
     osw.flush();
+    osw.close();
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().

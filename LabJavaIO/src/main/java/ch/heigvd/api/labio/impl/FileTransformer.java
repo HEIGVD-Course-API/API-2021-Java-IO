@@ -40,8 +40,8 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
-    LineNumberingCharTransformer transformer = new LineNumberingCharTransformer();
-
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -52,7 +52,7 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
-      InputStreamReader osr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
 
       String filename = inputFile.getName() + ".out";
       File outputFile = new File(inputFile.getParent(), filename);
@@ -60,12 +60,15 @@ public class FileTransformer {
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
 
 
-      int r = osr.read();
+      int r = isr.read();
       while(r != -1){
-        osw.write(transformer.transform(Character.toString((char) r)));
-        r = osr.read();
+        osw.write(upperTransformer.transform(lineTransformer.transform(Character.toString((char) r))));
+        r = isr.read();
       }
+
+      isr.close();
       osw.flush();
+      osw.close();
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }

@@ -22,8 +22,6 @@ public class LineNumberingCharTransformer {
   private int lineCounter = 0;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
 
     String reformat = "";
 
