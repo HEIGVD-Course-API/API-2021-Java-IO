@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,25 +29,27 @@ public class FileTransformer {
      * Before writing each character to the output file, the transformer calls
      * a character transformer to transform the character before writing it to the output.
      */
+    UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
     try {
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+
+      // Create the output file int hte same directory as the inputFile. Use the filename received as parameter plus .out
+      File outputFile = new File(inputFile.getParentFile(), inputFile.getName() + ".out");
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+      int b;
+      while((b = isr.read()) != -1){
+        String s = Character.toString((char) b);
+        osw.write(transformer1.transform(transformer2.transform(s)));
+      }
+
+      isr.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }
+
   }
 }
