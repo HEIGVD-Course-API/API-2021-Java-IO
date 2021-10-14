@@ -36,14 +36,13 @@ public class FileTransformer {
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
 
       // Create the output file int hte same directory as the inputFile. Use the filename received as parameter plus .out
-      File outputFile = new File(inputFile.getParentFile(), inputFile.getName() + ".out");
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8);
       int b;
       while((b = isr.read()) != -1){
-        String s = Character.toString((char) b);
+        String s = String.valueOf((char) b);
         osw.write(transformer1.transform(transformer2.transform(s)));
       }
-
+      osw.flush();
       isr.close();
       osw.close();
 
