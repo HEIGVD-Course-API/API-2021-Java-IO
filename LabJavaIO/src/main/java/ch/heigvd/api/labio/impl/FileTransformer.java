@@ -35,7 +35,6 @@ public class FileTransformer {
      *  and the LineNumberCharTransformer.
      */
     // ... transformer = ...
-    NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
     LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
     UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
 
