@@ -34,13 +34,13 @@ public class FileTransformer {
       if (inputFile.isFile()) {
         File outputFile = new File(inputFile.getPath() + ".out");
 
+	LineNumberingCharTransformer lineTrans = new LineNumberingCharTransformer();
+        UpperCaseCharTransformer upperCaseTrans = new UpperCaseCharTransformer();
+
         InputStreamReader irs = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
         OutputStreamWriter ows = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
 
         for (int nextChar = irs.read(); nextChar != -1; nextChar = irs.read()) {
-          LineNumberingCharTransformer lineTrans = new LineNumberingCharTransformer();
-          UpperCaseCharTransformer upperCaseTrans = new UpperCaseCharTransformer();
-
           String s = "" + (char)nextChar;
           s = upperCaseTrans.transform(s);
           s = lineTrans.transform(s);
