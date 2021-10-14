@@ -3,6 +3,7 @@ package ch.heigvd.api.labio.impl;
 import ch.heigvd.api.labio.impl.transformers.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,11 +30,13 @@ public class FileTransformer {
 
         UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
         LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
+        InputStreamReader isr = null;
+        OutputStreamWriter osw = null;
 
         try {
             String outputPath = inputFile.getCanonicalPath() + ".out";
-            InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
-            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputPath), "UTF-8");
+            isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+            osw = new OutputStreamWriter(new FileOutputStream(outputPath), StandardCharsets.UTF_8);
 
             while (isr.ready()) {
                 String s = Character.toString(isr.read());
@@ -43,6 +46,15 @@ public class FileTransformer {
             osw.close();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+        } finally {
+            try {
+                if (isr != null) isr.close();
+                if (osw != null) osw.close();
+            } catch (IOException ex) {
+                LOG.log(Level.SEVERE, "les flux ne se sont pas fermés correctement", ex);
+            }
+
+
         }
     }
 }
