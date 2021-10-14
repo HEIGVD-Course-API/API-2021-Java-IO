@@ -183,3 +183,5 @@ Here is the proposed list of tasks to achieve the objectives:
 7. When you are done, make sure that you have committed all your work and push your commits.
 8. To make a final validation, move to a fresh directory. Clone your fork. Do a `mvn clean package` and make sure that the tests are still green and that the app still produces the correct output.
 9. Check your pull request before renaming it: we don't want to have useless files in it, and all the tests of the automatic tests process we implemented must be green.
+
+4 5 3 8 9

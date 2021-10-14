@@ -84,7 +84,6 @@ public class Application {
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
-
       }
     }
   }
@@ -139,7 +138,7 @@ public class Application {
 
     OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     osw.write(quote.getQuote());
-
+    osw.close();
   }
   
   public void processQuoteFiles() throws IOException {
