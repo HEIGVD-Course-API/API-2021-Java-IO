@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -18,10 +19,21 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private boolean newLine = true;
+  private int lineNumber = 1;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String str = "";
+    if(newLine && lineNumber == 1) {
+      str += String.valueOf(lineNumber++) + ". ";
+      newLine = false;
+    }
+    if(Objects.equals(c, "\n")) {
+      newLine = true;
+      str += c + lineNumber++ + ". ";
+    } else if(!Objects.equals(c, "\r")){
+      str += c;
+    }
+    return str;
   }
 }
