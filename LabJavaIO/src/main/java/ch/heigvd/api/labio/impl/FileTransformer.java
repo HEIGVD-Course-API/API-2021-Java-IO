@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import javax.sound.sampled.Line;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +34,9 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+
+    UpperCaseCharTransformer     upperCaseTransformer     = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -40,6 +47,25 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      InputStreamReader inputStream = new InputStreamReader(
+              new FileInputStream(inputFile), StandardCharsets.UTF_8);
+
+      // https://www.geeksforgeeks.org/file-getcanonicalpath-method-in-java-with-examples/
+      String outputFileName = inputFile.getCanonicalPath() + ".out";
+      //System.out.println(outputFileName);
+
+      OutputStreamWriter outputStream = new OutputStreamWriter(
+              new FileOutputStream(outputFileName), StandardCharsets.UTF_8);
+
+      String str = "";
+
+      while(inputStream.ready()) {
+        str = Character.toString(inputStream.read());
+        outputStream.write(upperCaseTransformer.transform(lineNumberingTransformer.transform(str)));
+      }
+
+      inputStream.close();
+      outputStream.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
