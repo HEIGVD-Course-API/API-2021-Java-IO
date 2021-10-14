@@ -30,9 +30,6 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    LineNumberingCharTransformer lineTrans = new LineNumberingCharTransformer();
-    UpperCaseCharTransformer upperCaseTrans = new UpperCaseCharTransformer();
-
     try {
       if (inputFile.isFile()) {
         File outputFile = new File(inputFile.getPath() + ".out");
@@ -41,6 +38,9 @@ public class FileTransformer {
         OutputStreamWriter ows = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
 
         for (int nextChar = irs.read(); nextChar != -1; nextChar = irs.read()) {
+          LineNumberingCharTransformer lineTrans = new LineNumberingCharTransformer();
+          UpperCaseCharTransformer upperCaseTrans = new UpperCaseCharTransformer();
+
           String s = "" + (char)nextChar;
           s = upperCaseTrans.transform(s);
           s = lineTrans.transform(s);

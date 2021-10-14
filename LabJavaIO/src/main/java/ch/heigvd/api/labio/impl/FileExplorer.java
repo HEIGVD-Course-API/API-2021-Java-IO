@@ -24,6 +24,7 @@ public class FileExplorer {
         }
         if (file.isFile()) {
             transformer.transform(file);
+            return;
         }
     }
 
