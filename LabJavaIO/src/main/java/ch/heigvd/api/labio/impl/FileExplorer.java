@@ -13,7 +13,9 @@ import java.io.File;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
+
         FileTransformer transformer = new FileTransformer();
+
 
         /* TODO: implement the logic to explore the rootDirectory.
          *  Use the Java JDK documentation to see:
