@@ -19,18 +19,21 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   int lineNbr = 0;
-  boolean wasEnd = true;
+  boolean firstLine = true;
 
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
   public String transform(String c) {
-    if(Objects.equals(c, "\r")){
-      c = "";
-      wasEnd = true;
-    }
-    else if(wasEnd){
+    if(firstLine){
       c = String.valueOf(++lineNbr) + ". " + c;
-      wasEnd = false;
+      firstLine = false;
+    }
+    
+    if(c.contains("\r")){
+      c = "";
+    }
+    else if(c.contains("\n")){
+      c = c + String.valueOf(++lineNbr) + ". ";
     }
     return c;
   }
