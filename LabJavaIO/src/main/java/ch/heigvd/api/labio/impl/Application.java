@@ -129,7 +129,7 @@ public class Application {
      */
     OutputStreamWriter ows = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     ows.write(quote.getQuote());
-
+    ows.close();
   }
   
   public void processQuoteFiles() throws IOException {
