@@ -9,10 +9,10 @@ import java.util.logging.Logger;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class NoOpCharTransformer {
-  private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
+    private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
 
-  public String transform(String c) {
+    public String transform(String c) {
 
-    return c;
-  }
+        return c;
+    }
 }
