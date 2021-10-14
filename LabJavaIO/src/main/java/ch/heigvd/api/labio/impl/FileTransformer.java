@@ -51,19 +51,16 @@ public class FileTransformer {
             InputStreamReader inputFileReader = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
             OutputStreamWriter outputFileWriter =
                     new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath().concat(".out")), StandardCharsets.UTF_8);
-            // Buffers
+
             bufferedReader = new BufferedReader(inputFileReader);
             bufferedWriter = new BufferedWriter(outputFileWriter);
 
             int currentChar;
             while ((currentChar = bufferedReader.read()) != -1) {
-                char currentCharInChar = (char) currentChar;
-                String inputString = String.valueOf(currentCharInChar); // TODO : changer c'est moche
+                String inputString = String.valueOf((char) currentChar); // TODO : changer c'est moche
                 bufferedWriter.write(lineTransformer.transform(uppercaseTranformer.transform(inputString)));
             }
             bufferedWriter.flush();
-            inputFileReader.close();
-            outputFileWriter.close();
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
         }
