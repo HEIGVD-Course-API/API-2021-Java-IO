@@ -29,7 +29,7 @@ public class FileExplorer {
         if(rootDirectory.isFile()){
             transformer.transform(rootDirectory);
         }
-        else {
+        else if (rootDirectory.isDirectory()){
             File[] files = rootDirectory.listFiles();
             for(int i = 0; i < Objects.requireNonNull(files).length; ++i){
                 if(files[i].isFile())
