@@ -31,7 +31,7 @@ public class FileExplorer {
             Arrays.sort(listOfFiles);
 
             for(String name : listOfFiles){
-                File newfile = new File(rootDirectory.getPath() + "\\" + name);
+                File newfile = new File(rootDirectory.getPath() + "/" + name);
                 if(newfile.isFile())
                     transformer.transform(newfile);
                 else if(newfile.isDirectory())
