@@ -20,13 +20,13 @@ public class FileExplorer {
 
 
 
-        if(filesList.length != 0){
+        if(filesList != null){
             Arrays.sort(filesList);
-            for(File file : filesList){
-                if(file.isDirectory()){
-                    explore(file);
+            for(File file1 : filesList){
+                if(file1.isDirectory()){
+                    explore(file1);
                 }else{
-                    transformer.transform(file);
+                    transformer.transform(file1);
                 }
             }
         }
