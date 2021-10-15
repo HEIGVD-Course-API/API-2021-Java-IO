@@ -123,13 +123,11 @@ public class Application {
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
-     * TODO: There is something missing here: you have to implement writing the file
-     *   using an output stream.
-     *   Write the file with encoding UTF-8.
      */
 
     OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     osw.write(quote.getQuote());
+    osw.close();
 
   }
   
