@@ -39,6 +39,5 @@ public class LineNumberingCharTransformer {
       counter++;
 
     return c;
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

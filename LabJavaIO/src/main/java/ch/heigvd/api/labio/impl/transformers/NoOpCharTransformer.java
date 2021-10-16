@@ -15,6 +15,5 @@ public class NoOpCharTransformer {
     /* TODO: implement the transformation here.
      */
     return c;
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
