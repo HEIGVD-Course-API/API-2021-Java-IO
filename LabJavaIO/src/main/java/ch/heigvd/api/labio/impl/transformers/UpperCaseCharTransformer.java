@@ -13,6 +13,5 @@ public class UpperCaseCharTransformer {
 
   public String transform(String c) {
     return c.toUpperCase();
-    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
