@@ -1,6 +1,7 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -30,12 +31,17 @@ public class FileExplorer {
     }
 
     public void recursiveExplore(final File root, FileTransformer transformer) {
-        for (final File fileEntry : root.listFiles()) {
+        File[] files = root.listFiles();
+        if(files == null) return;
+        Arrays.sort(files);
+        for (final File fileEntry : files) {
             if (fileEntry.isDirectory()) {
                 recursiveExplore(fileEntry, transformer);
             } else {
                 transformer.transform(fileEntry);
             }
         }
+
+
     }
 }
