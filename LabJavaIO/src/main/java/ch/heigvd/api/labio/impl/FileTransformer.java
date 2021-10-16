@@ -64,9 +64,9 @@ public class FileTransformer {
       UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
       LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
       while ( (b = isr.read()) != -1 ) {
-        osw.write(transformer.transform(Character.toString((char)b)));
-        osw.write(transformer1.transform(Character.toString((char)b)));
-        osw.write(transformer2.transform(Character.toString((char)b)));
+        String c = transformer.transform(Character.toString((char)b));
+        c = transformer1.transform(Character.toString(b));
+        osw.write(transformer2.transform(c));
       }
 
 

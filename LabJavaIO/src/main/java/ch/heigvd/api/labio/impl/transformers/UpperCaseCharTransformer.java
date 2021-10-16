@@ -14,7 +14,7 @@ public class UpperCaseCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-     c =  c.toUpperCase();
+     c = c.toUpperCase();
     return c;
   }
 }

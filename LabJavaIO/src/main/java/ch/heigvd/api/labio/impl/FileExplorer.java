@@ -14,6 +14,8 @@ public class FileExplorer {
 
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
+        if(!rootDirectory.exists())
+            return;
 
         for (final File fileEntry : rootDirectory.listFiles()) {
 
