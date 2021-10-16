@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +35,10 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
+    NoOpCharTransformer noOpTransformer = new NoOpCharTransformer();
+    UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
+
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
@@ -39,7 +47,24 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+
+
+
     try {
+
+      InputStreamReader reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getPath()+ ".out"), "UTF-8");
+
+      for(int c =reader.read(); c != -1;c = reader.read()){
+        String car = String.valueOf((char)c);
+        car = noOpTransformer.transform(car);
+        car = upperCaseCharTransformer.transform(car);
+        car = lineNumberingCharTransformer.transform(car);
+        osw.write(car);
+      }
+
+      reader.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
