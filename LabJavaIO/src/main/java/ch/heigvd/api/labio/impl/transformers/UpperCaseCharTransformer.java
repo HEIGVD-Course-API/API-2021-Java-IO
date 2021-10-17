@@ -10,9 +10,9 @@ import java.util.logging.Logger;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class UpperCaseCharTransformer {
-  private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+    private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
-  public String transform(String c) {
-    return c.toUpperCase(Locale.ROOT);
-  }
+    public String transform(String c) {
+        return c.toUpperCase(Locale.ROOT);
+    }
 }
