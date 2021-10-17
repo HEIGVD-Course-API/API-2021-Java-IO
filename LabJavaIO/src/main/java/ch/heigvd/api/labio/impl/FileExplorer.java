@@ -37,13 +37,9 @@ public class FileExplorer {
         for (File file: filesList)
         {
             if (file.isFile())
-            {
                 fileTransformer.transform(file);
-            }
             else
-            {
                 explore(file);
-            }
         }
     }
 }
