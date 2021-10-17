@@ -36,8 +36,8 @@ public class FileTransformer {
      */
     // ... transformer = ...
     NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
-    LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
     UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
 
 
     /* TODO: implement the following logic here:
@@ -53,18 +53,15 @@ public class FileTransformer {
     Writer writer = null;
     try {
       File outPutFile = Paths.get(inputFile.getParentFile().getPath(), inputFile.getName() + ".out").toFile();
-      /*reader = new FileReader(inputFile);
-      writer = new FileWriter(outPutFile);*/
 
       reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
       writer = new OutputStreamWriter(new FileOutputStream(outPutFile), "UTF-8");
 
       int ch;
+      String s;
       while((ch = reader.read()) != -1){
-        noOpCharTransformer.transform(String.valueOf(ch));
-        lineNumberingTransformer.transform(String.valueOf(ch));
-        upperCaseCharTransformer.transform(String.valueOf(ch));
-        writer.write(ch);
+        s = noOpCharTransformer.transform(String.valueOf((char)ch));
+        writer.write(lineNumberingTransformer.transform(upperCaseCharTransformer.transform(s)));
       }
 
       writer.close();
