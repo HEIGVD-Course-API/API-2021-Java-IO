@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +35,10 @@ public class FileTransformer {
      *  and the LineNumberCharTransformer.
      */
     // ... transformer = ...
+    NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
+    LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -39,10 +48,37 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+
+    Reader reader = null;
+    Writer writer = null;
     try {
+      File outPutFile = Paths.get(inputFile.getParentFile().getPath(), inputFile.getName() + ".out").toFile();
+      /*reader = new FileReader(inputFile);
+      writer = new FileWriter(outPutFile);*/
+
+      reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
+      writer = new OutputStreamWriter(new FileOutputStream(outPutFile), "UTF-8");
+
+      int ch;
+      while((ch = reader.read()) != -1){
+        noOpCharTransformer.transform(String.valueOf(ch));
+        lineNumberingTransformer.transform(String.valueOf(ch));
+        upperCaseCharTransformer.transform(String.valueOf(ch));
+        writer.write(ch);
+      }
+
+      writer.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+    }finally {
+      try{
+        writer.close();
+        reader.close();
+      }catch (IOException ex){
+        LOG.log(Level.SEVERE, "Error while closing writer or reader.", ex);
+      }
+
     }
   }
 }
