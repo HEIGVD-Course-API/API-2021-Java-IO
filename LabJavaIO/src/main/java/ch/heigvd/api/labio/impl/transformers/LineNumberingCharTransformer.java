@@ -19,24 +19,26 @@ import java.util.logging.Logger;
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
     private int lineNumber = 1;
+    private String output = "";
 
-    public String transform(String inputChar) {
-        String result = "";
-        if (lineNumber == 1) {
-            result += lineNumberingText();
-        }
-        if (!inputChar.equals("\r")) {
-            result += inputChar;
-            if (inputChar.equals("\n")) {
-                result += lineNumberingText();
-            }
-        }
-        return result;
+    public LineNumberingCharTransformer() {
+        appendLineNumberingToOutput();
     }
 
-    private String lineNumberingText() {
-        String lineNumberingText = lineNumber + ". ";
+    public String transform(String inputChar) {
+        if (!inputChar.equals("\r")) {
+            output += inputChar;
+            if (inputChar.equals("\n")) {
+                appendLineNumberingToOutput();
+            }
+        }
+        String returnedValue = output;
+        output = "";
+        return returnedValue;
+    }
+
+    private void appendLineNumberingToOutput() {
+        output += lineNumber + ". ";
         lineNumber++;
-        return lineNumberingText;
     }
 }
