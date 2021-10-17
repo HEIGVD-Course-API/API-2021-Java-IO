@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -14,6 +15,13 @@ public class NoOpCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
+    try{
+      if(!c.isEmpty())
+        return c;
+
+    }catch (Exception ex){
+      LOG.log(Level.SEVERE, "Error, empty string ", ex);
+    }
     return c;
   }
 }

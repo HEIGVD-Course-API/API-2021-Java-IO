@@ -5,7 +5,9 @@ import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,8 +56,8 @@ public class FileTransformer {
     try {
       File outPutFile = Paths.get(inputFile.getParentFile().getPath(), inputFile.getName() + ".out").toFile();
 
-      reader = new InputStreamReader(new FileInputStream(inputFile), "UTF-8");
-      writer = new OutputStreamWriter(new FileOutputStream(outPutFile), "UTF-8");
+      reader = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      writer = new OutputStreamWriter(new FileOutputStream(outPutFile), StandardCharsets.UTF_8);
 
       int ch;
       String s;
@@ -70,7 +72,7 @@ public class FileTransformer {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }finally {
       try{
-        writer.close();
+        Objects.requireNonNull(writer).close();
         reader.close();
       }catch (IOException ex){
         LOG.log(Level.SEVERE, "Error while closing writer or reader.", ex);
