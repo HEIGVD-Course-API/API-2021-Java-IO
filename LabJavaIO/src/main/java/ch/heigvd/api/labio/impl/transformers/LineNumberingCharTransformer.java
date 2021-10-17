@@ -1,7 +1,7 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.IntStream;
 
 /**
  * This class applies a transformation to the input character (a string with a single character):
@@ -20,27 +20,29 @@ import java.util.stream.IntStream;
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
-
     private int lineNumber = 1;
 
     public String transform(String c) {
         /* TODO: implement the transformation here.
          */
-        if(lineNumber == 1){
-            c = lineNumber + ". " + c;
-            ++lineNumber;
-        }
-        if(c.equals("\r"))
-            c = "";
-        if (c.endsWith("\n")) {
-            c +=  lineNumber + ". ";
-            ++lineNumber;
-        }
 
+        try {
+            if (lineNumber == 1) {
+                c = lineNumber + ". " + c;
+                ++lineNumber;
+            }
+            if (c.equals("\r"))
+                c = "";
+            if (c.endsWith("\n")) {
+                c += lineNumber + ". ";
+                ++lineNumber;
+            }
+
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error while adding line number or converting line endings to Unix-style line endings.", ex);
+        }
         return c;
-
     }
 }
 
-//throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
