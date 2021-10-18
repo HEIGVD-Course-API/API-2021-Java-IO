@@ -34,7 +34,7 @@ public class FileTransformer {
         LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
 
         try {
-            // Read whole input file in a String. The bytes of the file are decoded to text using UTF-8.
+            // Read whole input file into a String. The bytes of the file are decoded to text using UTF-8.
             String inputFileText = new String(new FileInputStream(inputFile).readAllBytes(), StandardCharsets.UTF_8);
             // generate output file pathname using the parent directory and the name of the input file
             File outputFile = new File(inputFile.getParentFile(), inputFile.getName() + ".out");
