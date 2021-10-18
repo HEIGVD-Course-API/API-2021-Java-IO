@@ -82,8 +82,6 @@ public class Application {
       String quoteNumber = "quote-" + i +".utf8";
       storeQuote(quote, quoteNumber);
 
-      storeQuote(quote, "test");
-
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
