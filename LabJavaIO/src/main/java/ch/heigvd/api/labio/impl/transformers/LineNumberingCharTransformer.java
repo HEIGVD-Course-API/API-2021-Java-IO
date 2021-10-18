@@ -18,27 +18,44 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-    private int lineNumber = 1;
-    private String output = "";
+    private int currentLineNumber = 1;
+    /**
+     * Stores text that has not been outputted yet and that will be the output of the next transformation
+     */
+    private String transformationOutput = generateNextLineNumberingText();
 
-    public LineNumberingCharTransformer() {
-        appendLineNumberingToOutput();
+    /**
+     * Generates the line numbering text that must appear at the beginning of the current line.
+     * The line number is incremented each time this method is called.
+     *
+     * @return line numbering text
+     */
+    private String generateNextLineNumberingText() {
+        String LineNumberingText = currentLineNumber + ". ";
+        currentLineNumber++;
+        return LineNumberingText;
     }
 
+    /**
+     * Transforms a single char.
+     * If we are at the beginning of a line, the output will include a line numbering.
+     * If the input is "\r", the output will be an empty string.
+     *
+     * @param inputChar transformation input, must be at most 1 char long
+     * @return transformation output
+     */
     public String transform(String inputChar) {
+        if (inputChar == null || inputChar.length() > 1)
+            throw new IllegalArgumentException();
         if (!inputChar.equals("\r")) {
-            output += inputChar;
-            if (inputChar.equals("\n")) {
-                appendLineNumberingToOutput();
-            }
+            transformationOutput += inputChar;
+            // if we are at the beginning of a new line, append line numbering to output
+            if (inputChar.equals("\n"))
+                transformationOutput += generateNextLineNumberingText();
         }
-        String returnedValue = output;
-        output = "";
-        return returnedValue;
-    }
-
-    private void appendLineNumberingToOutput() {
-        output += lineNumber + ". ";
-        lineNumber++;
+        // we must empty transformationOutput before returning
+        String returnValue = transformationOutput;
+        transformationOutput = "";
+        return returnValue;
     }
 }

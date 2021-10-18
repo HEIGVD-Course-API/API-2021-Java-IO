@@ -13,29 +13,30 @@ import java.util.Arrays;
  */
 public class FileExplorer {
 
+    /**
+     * Recursively explores directory and invokes transformation on each found file. The input may also be a file.
+     *
+     * @param rootDirectory File or directory to explore recursively. If rootDirectory is not an existing file or
+     *                      directory, nothing is done.
+     */
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
-
-        /* : implement the logic to explore the rootDirectory.
-         *  Use the Java JDK documentation to see:
-         *  - how to get the files and directories of rootDirectory (which is of class File)
-         *  - to sort the items (files and directories) alphabetically
-         *  - to check if an item is a file or a directory
-         *  For each file, call the FileTransformer (see above).
-         *  For each directory, recursively explore the directory.
-         */
         if (rootDirectory.exists()) {
             if (rootDirectory.isFile()) {
                 transformer.transform(rootDirectory);
             } else {
+                // Here it is guaranteed that files can not be null, because listFiles() returns null only if
+                // rootDirectory is not a directory, and we have already checked that both rootDirectory exists and is
+                // not a file.
                 File[] files = rootDirectory.listFiles();
                 if (files.length != 0)
-                Arrays.sort(files);
+                    // this sorts files in lexicographic order because File implements the interface Comparable, and
+                    // the method compareTo of File compares path names lexicographically
+                    Arrays.sort(files);
                 for (File file : files) {
                     explore(file);
                 }
             }
         }
-
     }
 }
