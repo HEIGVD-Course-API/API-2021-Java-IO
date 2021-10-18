@@ -128,8 +128,8 @@ public class Application {
     File file = new File(directory, filename);
 
     // Create the outputStreamWriter file
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8);
-    osw.write(filename);
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+    osw.write(quote.getQuote());
     osw.close();
   }
   

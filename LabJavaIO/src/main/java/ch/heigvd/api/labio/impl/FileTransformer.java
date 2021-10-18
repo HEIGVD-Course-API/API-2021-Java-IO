@@ -33,7 +33,7 @@ public class FileTransformer {
     NoOpCharTransformer noOpChar = new NoOpCharTransformer();
     UpperCaseCharTransformer upperCaseChar = new UpperCaseCharTransformer();
     LineNumberingCharTransformer lineNumberingChar = new LineNumberingCharTransformer();
-    
+
     try {
       // Create the output file
       File outputFile = new File(inputFile.getPath() + ".out");
