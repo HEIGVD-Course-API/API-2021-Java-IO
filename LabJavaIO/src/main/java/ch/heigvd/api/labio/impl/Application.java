@@ -32,17 +32,14 @@ public class Application {
      * better to use a Logger rather than using System.out.println
      */
     System.setProperty("java.util.logging.SimpleFormatter.format", "%4$s: %5$s%6$s%n");
-    
        
-    int numberOfQuotes = 1;
-    /*
+    int numberOfQuotes = 0;
     try {
       numberOfQuotes = Integer.parseInt(args[0]);
     } catch (Exception e) {
       System.err.println("The command accepts a single numeric argument (number of quotes to fetch)");
       System.exit(-1);
     }
-    */
         
     Application app = new Application();
     try {
