@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -28,21 +30,10 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
     NoOpCharTransformer noOpChar = new NoOpCharTransformer();
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
+    UpperCaseCharTransformer upperCaseChar = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingChar = new LineNumberingCharTransformer();
+    
     try {
       // Create the output file
       File outputFile = new File(inputFile.getPath() + ".out");
@@ -56,6 +47,8 @@ public class FileTransformer {
       // Read until buffer empty
       while (isr.ready()){
         String s = Character.toString(isr.read());
+        s = upperCaseChar.transform(s);
+        s = lineNumberingChar.transform(s);
         osw.append(noOpChar.transform(s));
       }
 
