@@ -124,8 +124,9 @@ public class Application {
         /* Now write the quote into the file using Output streams.
          * The content of the file is in quote.getQuote().
          */
-        new FileWriter(file, StandardCharsets.UTF_8).write(quote.getQuote());
-
+        FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8);
+        fileWriter.write(quote.getQuote());
+        fileWriter.close();
     }
 
     public void processQuoteFiles() throws IOException {
