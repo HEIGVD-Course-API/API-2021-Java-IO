@@ -1,6 +1,9 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,15 +34,33 @@ public class FileTransformer {
      */
     // ... transformer = ...
 
+    NoOpCharTransformer noOpChar = new NoOpCharTransformer();
+
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
      *  - Copy all characters from the input file to the output file.
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      // Create the output file
+      File outputFile = new File(inputFile.getPath() + ".out");
+
+      // Read and Write file in place
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      // No need to check if exist (already done in FileExplorer.java)
+
+      // Read until buffer empty
+      while (isr.ready()){
+        String s = Character.toString(isr.read());
+        osw.append(noOpChar.transform(s));
+      }
+
+      isr.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
