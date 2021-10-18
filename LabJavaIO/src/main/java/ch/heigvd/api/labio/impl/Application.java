@@ -2,10 +2,10 @@ package ch.heigvd.api.labio.impl;
 
 import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
+import com.fasterxml.jackson.core.io.UTF8Writer;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -136,8 +136,7 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
 
-    // Same mais en write ?
-    // Reader reader = new InputStreamReader (new FileInputStream (file), “UTF UTF-8”);
+    Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
 
   }
   
