@@ -20,9 +20,10 @@ public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
     private int currentLineNumber = 1;
     /**
-     * Stores text that has not been outputted yet and that will be the output of the next transformation
+     * <code>transformationOutput</code> stores text that has not been outputted yet and that will be the output of the
+     * next transformation.
      */
-    private String transformationOutput = generateNextLineNumberingText();
+    private String transformationOutput = nextLineNumbering();
 
     /**
      * Generates the line numbering text that must appear at the beginning of the current line.
@@ -30,28 +31,26 @@ public class LineNumberingCharTransformer {
      *
      * @return line numbering text
      */
-    private String generateNextLineNumberingText() {
-        String LineNumberingText = currentLineNumber + ". ";
-        currentLineNumber++;
-        return LineNumberingText;
+    private String nextLineNumbering() {
+        return (currentLineNumber++) + ". ";
     }
 
     /**
      * Transforms a single char.
-     * If we are at the beginning of a line, the output will include a line numbering.
-     * If the input is "\r", the output will be an empty string.
+     * If we are at the beginning of a line, the output includes a line numbering.
+     * If the input is "\r", the output is an empty string.
      *
      * @param inputChar transformation input, must be at most 1 char long
      * @return transformation output
      */
     public String transform(String inputChar) {
-        if (inputChar == null || inputChar.length() > 1)
+        if (inputChar.length() > 1)
             throw new IllegalArgumentException();
         if (!inputChar.equals("\r")) {
             transformationOutput += inputChar;
             // if we are at the beginning of a new line, append line numbering to output
             if (inputChar.equals("\n"))
-                transformationOutput += generateNextLineNumberingText();
+                transformationOutput += nextLineNumbering();
         }
         // we must empty transformationOutput before returning
         String returnValue = transformationOutput;

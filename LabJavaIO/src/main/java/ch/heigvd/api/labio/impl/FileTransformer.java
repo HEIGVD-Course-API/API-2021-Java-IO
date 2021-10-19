@@ -21,30 +21,28 @@ public class FileTransformer {
     private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
 
     /**
-     * Reads the given inputFile and copies the content to a corresponding output file, after applying the following
-     * transformations :
-     * - The text is converted to upper case
-     * - All line endings are converted to Unix-style line endings, i.e. only '\n'.
-     * - A line number is added at the beginning of each line.
-     * @param inputFile file to be transformed
+     * Reads a file, applies transformations on its content and writes the result in a new file.
+     * The following transformations are applied :
+     * <br>- The text is converted to upper case
+     * <br>- All line endings are converted to Unix-style line endings, i.e. only '\n'.
+     * <br>- A line number is added at the beginning of each line.
+     *
+     * @param inputFile the content of this file will be transformed and stored in a new file
      */
     public void transform(File inputFile) {
-
-        UpperCaseCharTransformer upperCaseTransformer = new UpperCaseCharTransformer();
-        LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
-
         try {
-            // Read whole input file into a String. The bytes of the file are decoded to text using UTF-8.
+            // read whole input file text into a String
             String inputFileText = new String(new FileInputStream(inputFile).readAllBytes(), StandardCharsets.UTF_8);
-            // generate output file pathname using the parent directory and the name of the input file
-            File outputFile = new File(inputFile.getParentFile(), inputFile.getName() + ".out");
-            FileWriter outputFileWriter = new FileWriter(outputFile, StandardCharsets.UTF_8);
 
-            // apply transformations to each char of the input, and write the result to the output file
+            FileWriter outputFileWriter = new FileWriter(inputFile.toString() + ".out", StandardCharsets.UTF_8);
+            UpperCaseCharTransformer upperCaseTransformer = new UpperCaseCharTransformer();
+            LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
             for (char inputChar : inputFileText.toCharArray()) {
-                String inputString = Character.toString(inputChar);
-                String outputString = lineNumberingTransformer.transform(upperCaseTransformer.transform(inputString));
-                outputFileWriter.write(outputString);
+                // convert char to string, apply the two transformations, and write the result to the output file
+                outputFileWriter.write(
+                        lineNumberingTransformer.transform(
+                                upperCaseTransformer.transform(
+                                        Character.toString(inputChar))));
             }
             outputFileWriter.close();
         } catch (Exception ex) {
