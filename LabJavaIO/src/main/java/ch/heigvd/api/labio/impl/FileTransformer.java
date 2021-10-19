@@ -1,6 +1,8 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +35,8 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
+    UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -45,12 +48,14 @@ public class FileTransformer {
      */
     try {
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getPath() + ".out"), StandardCharsets.UTF_8);
+      Writer osw = new OutputStreamWriter(new FileOutputStream(inputFile.getPath() + ".out"), StandardCharsets.UTF_8);
 
       while(isr.ready()){
-        osw.write(noOpCharTransformer.transform(String.valueOf(isr.read())));
+        String charInFile = String.valueOf((Character.toChars(isr.read())));
+        String transformedChar = lineNumberingCharTransformer.transform(upperCaseCharTransformer.transform(charInFile));
+        osw.write(transformedChar);
       }
-      osw.write("ok");
+
       osw.flush();
       osw.close();
       isr.close();
