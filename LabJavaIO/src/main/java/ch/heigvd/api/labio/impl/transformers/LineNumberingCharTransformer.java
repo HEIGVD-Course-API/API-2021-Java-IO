@@ -23,9 +23,6 @@ public class LineNumberingCharTransformer {
     private int lineNumber = 1;
 
     public String transform(String c) {
-        /* TODO: implement the transformation here.
-         */
-
         try {
             if (lineNumber == 1) {
                 c = lineNumber + ". " + c;

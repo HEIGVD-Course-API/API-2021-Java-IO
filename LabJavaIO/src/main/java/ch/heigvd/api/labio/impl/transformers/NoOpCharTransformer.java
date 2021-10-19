@@ -10,18 +10,10 @@ import java.util.logging.Logger;
  * @author Olivier Liechti, Juergen Ehrensberger
  */
 public class NoOpCharTransformer {
-  private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
+    private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
 
-  public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    try{
-      if(!c.isEmpty())
+    public String transform(String c) {
+
         return c;
-
-    }catch (Exception ex){
-      LOG.log(Level.SEVERE, "Error, empty string ", ex);
     }
-    return c;
-  }
 }
