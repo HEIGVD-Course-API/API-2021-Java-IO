@@ -19,14 +19,14 @@ public class FileExplorer {
         FileTransformer transformer = new FileTransformer();
 
         File[] directoryContent = rootDirectory.listFiles();
-            if(directoryContent == null)
+            if(directoryContent == null)// check if file is empty
                 return;
             Arrays.sort(directoryContent);
             for(File file : directoryContent){
-                if (file.isDirectory())
+                if (file.isDirectory())// if file is a directory, explore the directory by calling again the fonction
                     explore(file);
                 else
-                    transformer.transform(file);
+                    transformer.transform(file); // call the fonction transform to change the file
          }
     }
 }

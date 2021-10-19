@@ -31,17 +31,20 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
+    // creation of the various transformers
     NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
     LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
     UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
-    
+
     try {
+
 
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
 
       int read;
-      while((read = isr.read()) != -1){
+      while((read = isr.read()) != -1){// check if the stream as been reached
+        // use of the transformers to change the text in the file
         String line = lineTransformer.transform(upperTransformer.transform(String.valueOf((char) read)));
         osw.write(line);
       }

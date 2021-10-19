@@ -12,7 +12,7 @@ public class UpperCaseCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* implement the transformation here.*/
+    //change every char in the string in upper case if they are letters
     return c.toUpperCase();
   }
 }

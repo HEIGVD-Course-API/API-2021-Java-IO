@@ -24,13 +24,13 @@ public class LineNumberingCharTransformer {
     String dot = ". ";
     String line = c;
 
-    if(c.contains("\r"))
+    if(c.contains("\r"))// replace the "\r"
       line = "";
-    if(counter == 0 && line.contains("\n"))
+    if(counter == 0 && line.contains("\n")) // change the first and second line
       line = ++counter + dot + c + ++counter + dot;
-    else if(c.contains("\n"))
+    else if(c.contains("\n"))// change for every line with the corresponding number
       line = c + ++counter + dot;
-    else if(counter == 0)
+    else if(counter == 0)// only change if there is only 1 line
       line = ++counter + dot + c;
 
     return line;

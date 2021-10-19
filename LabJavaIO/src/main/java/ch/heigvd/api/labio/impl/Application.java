@@ -80,6 +80,8 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
+
+      //create a file with the correct name and store the quote in it
       storeQuote(quote, "quote-"+ i +".utf8");
 
 
@@ -138,6 +140,7 @@ public class Application {
      *  Write the file with encoding UTF-8.
      */
 
+    // write in the file the given quote in UTF_8 and close it when it's done
     OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8 );
     osw.write(quote.getQuote());
     osw.close();
