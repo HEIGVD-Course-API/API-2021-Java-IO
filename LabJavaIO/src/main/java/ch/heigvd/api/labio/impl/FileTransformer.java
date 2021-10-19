@@ -65,13 +65,11 @@ public class FileTransformer {
         writer.write(lineNumberingTransformer.transform(upperCaseCharTransformer.transform(s)));
       }
 
-      writer.close();
-
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
     }finally {
       try{
-        Objects.requireNonNull(writer).close();
+        writer.close();
         reader.close();
       }catch (IOException ex){
         LOG.log(Level.SEVERE, "Error while closing writer or reader.", ex);
