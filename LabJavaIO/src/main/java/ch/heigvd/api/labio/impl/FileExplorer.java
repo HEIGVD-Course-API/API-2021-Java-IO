@@ -30,9 +30,11 @@ public class FileExplorer {
         }
         else {
             File[] files = rootDirectory.listFiles();
-            Arrays.sort(files);
-            for (File file : files) {
-                explore(file);
+            if (files != null) { // pour passer le test
+                Arrays.sort(files);
+                for (File file : files) {
+                    explore(file);
+                }
             }
         }
     }
