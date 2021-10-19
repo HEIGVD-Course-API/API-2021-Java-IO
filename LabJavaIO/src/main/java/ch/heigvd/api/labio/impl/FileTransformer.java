@@ -5,7 +5,8 @@ import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.awt.desktop.OpenFilesEvent;
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,14 +31,9 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-
     NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
-    //LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
-    //UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -48,6 +44,20 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      File outputFile = new File(inputFile.getName()+".out");
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+
+      int read;
+      while((read = isr.read()) != -1){
+        String line = lineTransformer.transform(upperTransformer.transform(Character.toString((char) read)));
+        osw.write(line);
+      }
+
+      isr.close();
+
+      osw.flush();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

@@ -18,25 +18,21 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-  int counter = 0;
+  private int counter = 0;
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    String output = null;
-    String numberDot = ++counter + ". ";
+
+    String dot = ". ";
+    String line = c;
 
     if(c.contains("\r"))
-      c.replace("\r", "");
+      line = "";
+    if(counter == 0 && line.contains("\n"))
+      line = ++counter + dot + c + ++counter + dot;
+    else if(c.contains("\n"))
+      line = c + ++counter + dot;
+    else if(counter == 0)
+      line = ++counter + dot + c;
 
-    if(counter == 0)
-      if(c.contains("\n"))
-        output = numberDot + c + numberDot;
-      else
-        output = numberDot + c;
-
-    if(c.contains("\n") && counter > 0)
-      output = c + numberDot;
-
-    return output;
+    return line;
   }
 }

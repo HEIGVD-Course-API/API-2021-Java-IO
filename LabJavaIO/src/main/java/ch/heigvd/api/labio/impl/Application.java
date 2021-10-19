@@ -71,7 +71,6 @@ public class Application {
 
   public void fetchAndStoreQuotes(int numberOfQuotes) throws IOException {
     QuoteClient client = new QuoteClient();
-    String filename;
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
       /*  As you can see, this method handles the first part of the lab. It uses the web service
@@ -81,8 +80,7 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
-      filename = "quote-"+ i +".utf8";
-      storeQuote(quote, filename);
+      storeQuote(quote, "quote-"+ i +".utf8");
 
 
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
