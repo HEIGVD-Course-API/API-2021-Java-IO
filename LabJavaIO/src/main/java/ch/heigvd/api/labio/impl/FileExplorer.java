@@ -1,6 +1,7 @@
 package ch.heigvd.api.labio.impl;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -26,14 +27,16 @@ public class FileExplorer {
 
             File[] entities = rootDirectory.listFiles();
 
-            for (var entity : entities) {
-                if (entity.isFile()) {
-                    FileTransformer transformer = new FileTransformer();
-                    transformer.transform(entity);
-                } else
-                    explore(entity);
+            if (entities != null) {
+                Arrays.sort(entities);
+                for (var entity : entities) {
+                    if (entity.isFile()) {
+                        FileTransformer transformer = new FileTransformer();
+                        transformer.transform(entity);
+                    } else
+                        explore(entity);
+                }
             }
-
         }
 
         // throw new UnsupportedOperationException("The student has not implemented this method yet.");
