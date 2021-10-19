@@ -34,7 +34,7 @@ public class FileTransformer {
             // read whole input file text into a String
             String inputFileText = new String(new FileInputStream(inputFile).readAllBytes(), StandardCharsets.UTF_8);
 
-            FileWriter outputFileWriter = new FileWriter(inputFile.toString() + ".out", StandardCharsets.UTF_8);
+            FileWriter outputFileWriter = new FileWriter(inputFile + ".out", StandardCharsets.UTF_8);
             UpperCaseCharTransformer upperCaseTransformer = new UpperCaseCharTransformer();
             LineNumberingCharTransformer lineNumberingTransformer = new LineNumberingCharTransformer();
             for (char inputChar : inputFileText.toCharArray()) {
