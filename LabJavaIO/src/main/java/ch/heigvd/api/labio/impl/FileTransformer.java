@@ -35,15 +35,20 @@ public class FileTransformer {
 		UpperCaseCharTransformer uTransformer = new UpperCaseCharTransformer();
 
 		try {
+			// create file streams for reading and writing
 			String path = inputFile.getPath() + ".out";
 			Reader reader = new InputStreamReader(new FileInputStream(inputFile)
 					  , StandardCharsets.UTF_8);
 			Writer writer = new OutputStreamWriter(new FileOutputStream(path),
 					  StandardCharsets.UTF_8);
 
-			while (reader.ready()) {
-				writer.write(lTransformer.transform(uTransformer.transform(Character.toString(reader.read()))));
+			while (reader.ready()) { // while there is something to read, write and
+				// transform in the new file
+				writer.write(lTransformer.transform(
+						  uTransformer.transform(
+									 Character.toString(reader.read()))));
 			}
+			// do not forget to close the streams !
 			reader.close();
 			writer.close();
 

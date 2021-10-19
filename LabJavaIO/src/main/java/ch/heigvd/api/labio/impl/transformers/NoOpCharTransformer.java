@@ -12,6 +12,6 @@ public class NoOpCharTransformer {
   private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
 
   public String transform(String c) {
-    return c;
+    return c; // nothing to do except return given string
   }
 }

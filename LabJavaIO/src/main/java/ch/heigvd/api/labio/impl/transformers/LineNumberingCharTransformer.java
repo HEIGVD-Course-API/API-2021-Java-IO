@@ -22,11 +22,12 @@ public class LineNumberingCharTransformer {
   private int lineNumber = 1;
 
   public String transform(String c) {
+
     StringBuilder sb = new StringBuilder();
 
-    if(lineNumber == 1)
+    if(lineNumber == 1) // if first line
       sb.append(lineNumber++).append(". ");
-    if(!c.equals("\r"))
+    if(!c.equals("\r")) // for first line and any other line
       sb.append(c);
     if(c.equals("\n"))
       sb.append(lineNumber++).append(". ");
