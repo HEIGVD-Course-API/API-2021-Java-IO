@@ -79,6 +79,8 @@ public class Application {
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
 
+      storeQuote(quote, "quote-" + i + ".utf8");
+
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
@@ -86,25 +88,25 @@ public class Application {
       }
     }
   }
-  
+
   /**
    * This method deletes the WORKSPACE_DIRECTORY and its content. It uses the
    * apache commons-io library. You should call this method in the main method.
-   * 
-   * @throws IOException 
+   *
+   * @throws IOException
    */
   void clearOutputDirectory() throws IOException {
-    FileUtils.deleteDirectory(new File(WORKSPACE_DIRECTORY));    
+    FileUtils.deleteDirectory(new File(WORKSPACE_DIRECTORY));
   }
 
   /**
    * This method stores the content of a quote in the local file system. It has
-   * 2 responsibilities: 
-   * 
+   * 2 responsibilities:
+   *
    * - with quote.getTags(), it gets a list of tags and uses
    *   it to create sub-folders (for instance, if a quote has three tags "A", "B" and
    *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.
-   * 
+   *
    * - with quote.getQuote(), it has access to the text of the quote. It stores
    *   this text in UTF-8 file.
    * 
@@ -135,6 +137,10 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
 
+    if(file.createNewFile()){
+      FileTransformer fileTransformer = new FileTransformer();
+      fileTransformer.transform(file);
+    }
   }
   
   public void processQuoteFiles() throws IOException {
