@@ -25,7 +25,7 @@ public class LineNumberingCharTransformer {
     /* TODO: implement the transformation here.
      */
     if (c.length() != 1)
-      throw new UnsupportedOperationException("The student has not implemented this method yet.");
+      throw new UnsupportedOperationException("lineNumberingCharTransformer : The length of parameter must be of 1.");
 
     else {
 
