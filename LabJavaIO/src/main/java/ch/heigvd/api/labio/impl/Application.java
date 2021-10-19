@@ -138,8 +138,8 @@ public class Application {
      *  Write the file with encoding UTF-8.
      */
 
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8 );
-    osw.write(filename);
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8 );
+    osw.write(quote.getQuote());
     osw.close();
 
   }
