@@ -44,13 +44,13 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
-      File outputFile = new File(inputFile.getName()+".out");
+
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), StandardCharsets.UTF_8);
 
       int read;
       while((read = isr.read()) != -1){
-        String line = lineTransformer.transform(upperTransformer.transform(Character.toString((char) read)));
+        String line = lineTransformer.transform(upperTransformer.transform(String.valueOf((char) read)));
         osw.write(line);
       }
 

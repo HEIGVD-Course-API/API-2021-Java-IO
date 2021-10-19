@@ -25,7 +25,7 @@ public class FileExplorer {
             for(File file : directoryContent){
                 if (file.isDirectory())
                     explore(file);
-                else if(file.isFile())
+                else
                     transformer.transform(file);
          }
     }
