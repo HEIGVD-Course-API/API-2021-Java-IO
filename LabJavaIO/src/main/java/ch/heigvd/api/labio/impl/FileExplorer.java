@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.DirectoryFileFilter;
+import org.apache.commons.io.filefilter.RegexFileFilter;
+
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * The FileExplorer performs an exploration of the file system. It
@@ -25,5 +30,18 @@ public class FileExplorer {
          */
         // throw new UnsupportedOperationException("The student has not implemented this method yet.");
 
+        if(rootDirectory.isDirectory()) {
+            File[] files = rootDirectory.listFiles();
+            if(files != null) {
+                Arrays.sort(files);
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        explore(file);
+                    } else {
+                        transformer.transform(file);
+                    }
+                }
+            }
+        }
     }
 }

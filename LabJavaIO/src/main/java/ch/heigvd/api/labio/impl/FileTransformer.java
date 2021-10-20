@@ -1,8 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
-import java.io.File;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +35,10 @@ public class FileTransformer {
      *  and the LineNumberCharTransformer.
      */
     // ... transformer = ...
-    // NoOpCharTransformer transformer =
+    NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
+    LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
+
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -43,6 +49,32 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
+      //File file = new File(inputFile.getAbsolutePath(), inputFile.getName() + ".out");
+
+      String outputFileName = inputFile.getAbsolutePath() + ".out";
+
+      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFileName), StandardCharsets.UTF_8);
+      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile.getAbsolutePath()), StandardCharsets.UTF_8);
+      // osw.write(noOpCharTransformer.transform("b"));
+      // osw.close();
+
+      // Writer writer = new BufferedWriter(new FileWriter(outputFileName));
+      // FileInputStream reader = new FileInputStream(inputFile.getAbsolutePath());
+
+      int b = isr.read();
+      //int b = reader.read();
+      String c;
+
+      while(b != -1) {
+        c = noOpCharTransformer.transform("" + (char) b);
+        c = lineNumberingCharTransformer.transform(c);
+        // writer.write(upperCaseCharTransformer.transform(c));
+        osw.write(upperCaseCharTransformer.transform(c));
+        // b = reader.read();
+        b = isr.read();
+      }
+      // writer.close();
+      osw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
