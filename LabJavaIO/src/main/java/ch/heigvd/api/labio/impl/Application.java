@@ -106,7 +106,7 @@ public class Application {
    *
    * - with quote.getTags(), it gets a list of tags and uses
    *   it to create sub-folders (for instance, if a quote has three tags "A", "B" and
-   *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8.
+   *   "C", it will be stored in /quotes/A/B/C/quotes-n.utf8).
    *
    * - with quote.getQuote(), it has access to the text of the quote. It stores
    *   this text in UTF-8 file.
@@ -119,7 +119,7 @@ public class Application {
     // Create the directory path by concatenating the tags from quote, with a slash between the tags
     List<String> tags = quote.getTags();
     String path = WORKSPACE_DIRECTORY;
-    for(String tag : tags) {
+    for (String tag : tags) {
       path += "/" + tag;
     }
     path += "/";
@@ -137,17 +137,25 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+    OutputStreamWriter osw = null;
 
     try {
 
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+      osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
       osw.write(filename);
-      osw.close();
 
-    }catch (Exception ex){
+    } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while writing the file.", ex);
-    }
+    } finally {
 
+      // We are done, so let's close the streams.
+      try {
+        osw.close();
+      } catch (IOException ex) {
+        Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+    }
   }
 
   public void processQuoteFiles() throws IOException {

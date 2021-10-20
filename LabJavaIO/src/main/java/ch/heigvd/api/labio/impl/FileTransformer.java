@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class FileTransformer {
   private static final Logger LOG = Logger.getLogger(FileTransformer.class.getName());
 
-  String encoding = "UTF-8";
+  public static String encoding = "UTF-8";
   public void transform(File inputFile) {
     /*
      * This method opens the given inputFile and copies the
@@ -50,12 +50,13 @@ public class FileTransformer {
     LineNumberingCharTransformer lnct = new LineNumberingCharTransformer();
     NoOpCharTransformer not = new NoOpCharTransformer();
     UpperCaseCharTransformer uct = new UpperCaseCharTransformer();
-
+    InputStreamReader isr = null;
+    OutputStreamWriter osw = null;
     try {
 
       File outputFile = new File(inputFile + ".out");
-      InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), encoding);
-      OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), encoding);
+      isr = new InputStreamReader(new FileInputStream(inputFile), encoding);
+      osw = new OutputStreamWriter(new FileOutputStream(outputFile), encoding);
 
       int content ;
 
@@ -64,11 +65,25 @@ public class FileTransformer {
         osw.write(lnct.transform(uct.transform(Character.toString((char)content))));
       }
 
-      isr.close();
-      osw.close();
+
+
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+    } finally {
+
+      // We are done, so let's close the streams.
+      try {
+        isr.close();
+      } catch (IOException ex) {
+        Logger.getLogger(FileTransformer.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      try {
+        osw.close();
+      } catch (IOException ex) {
+        Logger.getLogger(FileTransformer.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
     }
   }
 }
