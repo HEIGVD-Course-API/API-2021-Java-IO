@@ -4,8 +4,8 @@ import ch.heigvd.api.labio.quotes.Quote;
 import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,9 +126,14 @@ public class Application {
      * The content of the file is in quote.getQuote().
      */
 
-    if(file.createNewFile()){
-      FileTransformer fileTransformer = new FileTransformer();
-      fileTransformer.transform(file);
+    try {
+      Writer osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
+
+      osw.write(quote.getQuote());
+      osw.flush();
+      osw.close();
+    } catch (Exception ex) {
+      LOG.log(Level.SEVERE, "Error while creating the file.", ex);
     }
   }
   
