@@ -5,6 +5,7 @@ import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -123,7 +124,7 @@ public class Application {
      * The content of the file is in quote.getQuote().
      */
 
-    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
+    OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
     osw.write(quote.getQuote());
 
     osw.close();

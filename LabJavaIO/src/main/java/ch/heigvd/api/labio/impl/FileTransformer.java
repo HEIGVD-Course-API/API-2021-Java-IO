@@ -5,6 +5,7 @@ import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
 import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,10 +40,10 @@ public class FileTransformer {
         try {
             File outPutFile = Paths.get(inputFile.getParentFile().getPath(), inputFile.getName() + ".out").toFile();
 
-            br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"));
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outPutFile), "UTF-8"));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outPutFile), StandardCharsets.UTF_8));
 
-          int ch;
+            int ch;
             String s;
             while ((ch = br.read()) != -1) {
                 s = noOpCharTransformer.transform(String.valueOf((char) ch));
@@ -53,14 +54,16 @@ public class FileTransformer {
             LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
         } finally {
             try {
-              if (bw != null) {
-                bw.close();
-              }
-              if (br != null) {
-                br.close();
-              }
+                if (bw != null)
+                    bw.close();
             } catch (IOException ex) {
-                LOG.log(Level.SEVERE, "Error while closing writer or reader.", ex);
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
+            }
+            try {
+                if (br != null)
+                    br.close();
+            } catch (IOException ex) {
+                LOG.log(Level.SEVERE, ex.getMessage(), ex);
             }
 
         }
