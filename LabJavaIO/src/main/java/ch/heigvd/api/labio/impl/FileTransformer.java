@@ -38,14 +38,6 @@ public class FileTransformer {
      LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
      UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
 
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
     try {
       File outputFile = new File(inputFile.getAbsolutePath() + ".out");
       InputStreamReader isr = new InputStreamReader(
