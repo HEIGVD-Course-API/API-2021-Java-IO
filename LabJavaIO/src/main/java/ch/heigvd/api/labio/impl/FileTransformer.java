@@ -32,34 +32,20 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
+
       NoOpCharTransformer transformer = new NoOpCharTransformer();
 
 
 
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
-
-
-
     try {
-      // Crée un flux d'entrée pour lire un fichier texte
+      // Create an input stream to read a text file
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile), StandardCharsets.UTF_8);
 
-      // Crée un fichier de sortie pour écrire le contenu du fichier lu
+      // Create an output file to write the read file
       File outputFile = new File(inputFile.getAbsolutePath() + ".out");
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8);
 
-      // Ecrit dans le fichier de sortie et effectue les transformations demandées sur chaque caractère
+      // Write in the output file and make every transformation asked on every char
       int b;
       UpperCaseCharTransformer transformer1 = new UpperCaseCharTransformer();
       LineNumberingCharTransformer transformer2 = new LineNumberingCharTransformer();
@@ -68,7 +54,6 @@ public class FileTransformer {
         c = transformer1.transform(Character.toString(b));
         osw.write(transformer2.transform(c));
       }
-
 
       osw.close();
       isr.close();
