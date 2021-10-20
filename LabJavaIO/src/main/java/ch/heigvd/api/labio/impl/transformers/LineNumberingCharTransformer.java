@@ -24,30 +24,25 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    if (c.length() != 1)
-      throw new UnsupportedOperationException("lineNumberingCharTransformer : The length of parameter must be of 1.");
+     // Add number 1 at the beginning of first line
 
-    else {
+    if (line_nb == 1) {
 
-      // Add number 1 at the beginning of first line
-      if (line_nb == 1) {
+      if (c.equals("\n"))
+        return line_nb++ + ". " + c + line_nb++ + ". ";
 
-        if (c.equals("\n"))
-          return line_nb++ + ". " + c + line_nb++ + ". ";
-
-        return line_nb++ + ". " + c;
-      }
-
-      // Add number of line after \n
-      if(c.equals("\n")) {
-        return c + line_nb++ + ". ";
-      }
-
-      // Remove carriage return
-      if (c.equals("\r"))
-        return "";
-
-      return c;
+      return line_nb++ + ". " + c;
     }
+
+    // Add number of line after \n
+    if(c.equals("\n")) {
+      return c + line_nb++ + ". ";
+    }
+
+    // Remove carriage return
+    if (c.equals("\r"))
+      return "";
+
+    return c;
   }
 }

@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +34,9 @@ public class FileTransformer {
      *  and the LineNumberCharTransformer.
      */
     // ... transformer = ...
+    NoOpCharTransformer transformerNoOpChar               = new NoOpCharTransformer();
+    UpperCaseCharTransformer transformerUpperCase         = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer transformerLineNumbering = new LineNumberingCharTransformer();
 
     /* TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
@@ -39,10 +46,43 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
+    BufferedReader ibr = null;
+    BufferedWriter obw = null;
+
     try {
+
+      ibr = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"));
+      obw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(inputFile + ".out"), "UTF-8"));
+
+      int char1;
+
+      while((char1 = ibr.read()) != -1) {
+
+        String str = String.valueOf((char)char1);
+
+        str = transformerUpperCase.transform(str);
+        str = transformerLineNumbering.transform(str);
+
+        obw.write(str);
+    }
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
+
+    } finally {
+      try {
+        if(ibr != null)
+          ibr.close();
+      } catch (IOException io) {
+        LOG.log(Level.SEVERE, "Error while closing input file.", io);
+      }
+
+      try {
+        if (obw != null)
+          obw.close();
+      } catch (IOException io) {
+        LOG.log(Level.SEVERE, "Error while closing output file.", io);
+      }
     }
   }
 }

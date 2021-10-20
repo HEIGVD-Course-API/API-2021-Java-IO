@@ -14,8 +14,6 @@ public class UpperCaseCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    if (c.length() != 1)
-      throw new UnsupportedOperationException("UpperCaseCharTransformer : The length of parameter must be of 1.");
     return c.toUpperCase();
   }
 }
