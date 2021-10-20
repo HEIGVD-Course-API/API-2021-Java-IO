@@ -34,7 +34,6 @@ public class FileTransformer {
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
     NoOpCharTransformer noOpCharTransformer = new NoOpCharTransformer();
     LineNumberingCharTransformer lineNumberingCharTransformer = new LineNumberingCharTransformer();
     UpperCaseCharTransformer upperCaseCharTransformer = new UpperCaseCharTransformer();
@@ -49,31 +48,20 @@ public class FileTransformer {
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
     try {
-      //File file = new File(inputFile.getAbsolutePath(), inputFile.getName() + ".out");
-
       String outputFileName = inputFile.getAbsolutePath() + ".out";
 
       OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(outputFileName), StandardCharsets.UTF_8);
       InputStreamReader isr = new InputStreamReader(new FileInputStream(inputFile.getAbsolutePath()), StandardCharsets.UTF_8);
-      // osw.write(noOpCharTransformer.transform("b"));
-      // osw.close();
-
-      // Writer writer = new BufferedWriter(new FileWriter(outputFileName));
-      // FileInputStream reader = new FileInputStream(inputFile.getAbsolutePath());
 
       int b = isr.read();
-      //int b = reader.read();
       String c;
 
       while(b != -1) {
         c = noOpCharTransformer.transform("" + (char) b);
         c = lineNumberingCharTransformer.transform(c);
-        // writer.write(upperCaseCharTransformer.transform(c));
         osw.write(upperCaseCharTransformer.transform(c));
-        // b = reader.read();
         b = isr.read();
       }
-      // writer.close();
       osw.close();
 
     } catch (Exception ex) {
