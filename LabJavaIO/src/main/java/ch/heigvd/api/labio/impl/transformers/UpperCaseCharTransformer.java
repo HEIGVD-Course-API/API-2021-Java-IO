@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -14,6 +15,8 @@ public class UpperCaseCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    // !! My Add !!
+    return c.toUpperCase();
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

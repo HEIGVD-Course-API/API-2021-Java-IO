@@ -1,6 +1,7 @@
 package ch.heigvd.api.labio.impl.transformers;
 
 import java.util.logging.Logger;
+import  java.util.logging.Level;
 
 /**
  * This class applies no transformation to the input character (a string with a single character).
@@ -14,6 +15,15 @@ public class NoOpCharTransformer {
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    try {
+      if (!c.isEmpty()) {
+        return c;
+      }
+
+    } catch ( Exception e) {
+      LOG.log(Level.SEVERE, "Error ! ", e);
+    }
+
+    return c;
   }
 }
