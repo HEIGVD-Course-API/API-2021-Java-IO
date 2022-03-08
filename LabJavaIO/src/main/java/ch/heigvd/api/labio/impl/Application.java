@@ -139,7 +139,13 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
     OutputStreamWriter osw = new OutputStreamWriter(
-            new FileOutputStream(filename + ".txt"), StandardCharsets.UTF_8);
+            new FileOutputStream(filename + ".txt"),
+            StandardCharsets.UTF_8
+    );
+
+    osw.write(quote.getQuote());
+
+    osw.close();
 
   }
   
