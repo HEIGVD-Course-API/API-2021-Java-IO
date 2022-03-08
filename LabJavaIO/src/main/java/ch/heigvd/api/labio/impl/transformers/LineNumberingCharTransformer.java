@@ -18,10 +18,26 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private static final String LINE_NUMBER_SUFFIX = ". ";
+
+  private boolean firstLineNumberWritten = false;
+  private int lineNumber = 1;
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
-     */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    String out = "";
+    if (!firstLineNumberWritten ) {
+      out = lineNumber + LINE_NUMBER_SUFFIX;
+      firstLineNumberWritten = true;
+    }
+
+    if (!c.equals("\r")) {
+      out += c;
+      if (c.equals("\n")) {
+        ++lineNumber;
+        out += lineNumber + LINE_NUMBER_SUFFIX;
+      }
+    }
+
+    return out;
   }
 }
