@@ -18,10 +18,28 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
+  private int lineCounter = 0;
 
   public String transform(String c) {
     /* TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    // If it is not a char we want to remove, build a return string
+    String retString = c;
+    // In case it is the first char read, prefix line with number
+    if (lineCounter == 0){
+      lineCounter++;
+      retString = lineCounter + ". " + retString;
+    }
+    // If it is a new line char, append it with line number
+    if (c.equals("\n")) {
+      lineCounter++;
+      retString = retString + lineCounter + ". ";
+    }
+    // Check if char is a \r that we want to remove, return empty string
+    if (c.equals("\r")){
+      return "";
+    }
+    // Return the string
+    return retString;
   }
 }
