@@ -18,22 +18,20 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
     private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-    private boolean newLine = true;
+    private boolean firstLine = true;
     private int currentLine = 1;
 
     public String transform(String c) {
-        if (newLine) {
-            // This handles blank lines (ignoring them)
-            if (c.equalsIgnoreCase("\n") || c.equalsIgnoreCase("\r"))
-                return "";
-
-            newLine = false;
-            return String.format("%d. %s", currentLine++, c);
-        } else if (c.equalsIgnoreCase("\r")) {
-            return "";
-        } else if (c.equalsIgnoreCase("\n")) {
-            newLine = true;
+        String transformed = c;
+        if (firstLine) {
+            firstLine = false;
+            transformed = String.format("%d. %s", currentLine++, c);
         }
-        return c;
+
+        if (c.contentEquals("\n")) {
+            transformed += String.format("%d. ", currentLine++);
+        }
+
+        return transformed.replace("\r", "");
     }
 }
