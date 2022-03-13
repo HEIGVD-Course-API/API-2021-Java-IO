@@ -5,7 +5,10 @@ import ch.heigvd.api.labio.quotes.QuoteClient;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +73,7 @@ public class Application {
     QuoteClient client = new QuoteClient();
     for (int i = 0; i < numberOfQuotes; i++) {
       Quote quote = client.fetchQuote();
-      /* TODO: There is a missing piece here!
+      /* Done: There is a missing piece here!
        *  As you can see, this method handles the first part of the lab. It uses the web service
        *  client to fetch quotes. We have removed a single line from this method. It is a call to
        *  one method provided by this class, which is responsible for storing the content of the
@@ -78,7 +81,7 @@ public class Application {
        *  Add the missing line which stores the content of the quote in a file with
        *  the name "quote-i.utf8" where 'i' is the number of the file.
        */
-
+      storeQuote(quote, "quote-" + i + ".utf8");
       LOG.info("Received a new joke with " + quote.getTags().size() + " tags.");
       for (String tag : quote.getTags()) {
         LOG.info("> " + tag);
@@ -130,10 +133,15 @@ public class Application {
 
     /* Now write the quote into the file using Output streams.
      * The content of the file is in quote.getQuote().
-     * TODO: There is something missing here: you have to implement writing the file
+     * Done: There is something missing here: you have to implement writing the file
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
+    try (OutputStreamWriter writer =
+                 new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)){
+      writer.write(quote.getQuote());
+      // do stuff
+    }
 
   }
   

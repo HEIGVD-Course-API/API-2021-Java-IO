@@ -18,10 +18,21 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-
+  private int index = 0;
   public String transform(String c) {
-    /* TODO: implement the transformation here.
+    /* Done: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    if(index == 0){
+      return (++index) + ". " + (c.equals("\r") ? "" : c);
+    }
+    if(c.equals("\r")) {
+      System.out.println("Remove carriage return!");
+      return "";
+    }
+    if (c.equals("\n")){
+      return "\n" + (index++) + ". ";
+    }
+    return c;
+    // throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }
