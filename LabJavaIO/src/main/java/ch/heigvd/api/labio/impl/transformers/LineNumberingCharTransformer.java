@@ -21,15 +21,14 @@ public class LineNumberingCharTransformer {
   private int nextLineNumber = 1;
 
   public String transform(String c) {
-    if (this.nextLineNumber == 1) {
+    if (this.nextLineNumber == 1)
       c = this.nextLineNumber++ + ". " + c;
-    }
-    if (c.endsWith("\r")) {
+
+    if (c.endsWith("\r"))
       c = "";
-    }
-    if (c.endsWith("\n")) {
+
+    if (c.endsWith("\n"))
       c = c + this.nextLineNumber++ + ". ";
-    }
 
     return c;
   }
