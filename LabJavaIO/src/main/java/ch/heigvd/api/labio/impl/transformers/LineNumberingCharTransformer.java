@@ -1,6 +1,5 @@
 package ch.heigvd.api.labio.impl.transformers;
 
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -19,16 +18,17 @@ import java.util.logging.Logger;
  */
 public class LineNumberingCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
-  private static boolean insertLineNumberAtNextPassage = true;
-  private static int lineNumberToInsertAtNextPassage = 1;
+  private int nextLineNumber = 1;
 
   public String transform(String c) {
-    if (LineNumberingCharTransformer.insertLineNumberAtNextPassage) {
-      c = LineNumberingCharTransformer.lineNumberToInsertAtNextPassage + " " + c;
-      ++LineNumberingCharTransformer.lineNumberToInsertAtNextPassage;
+    if (this.nextLineNumber == 1) {
+      c = this.nextLineNumber++ + ". " + c;
+    }
+    if (c.endsWith("\r")) {
+      c = "";
     }
     if (c.endsWith("\n")) {
-      LineNumberingCharTransformer.insertLineNumberAtNextPassage = true;
+      c = c + this.nextLineNumber++ + ". ";
     }
 
     return c;

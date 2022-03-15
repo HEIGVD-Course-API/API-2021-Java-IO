@@ -139,14 +139,13 @@ public class Application {
      *   Write the file with encoding UTF-8.
      */
     OutputStreamWriter osw = new OutputStreamWriter(
-            new FileOutputStream(filename + ".txt"),
+            new FileOutputStream(file),
             StandardCharsets.UTF_8
     );
 
     osw.write(quote.getQuote());
-
+    osw.flush();
     osw.close();
-
   }
   
   public void processQuoteFiles() throws IOException {

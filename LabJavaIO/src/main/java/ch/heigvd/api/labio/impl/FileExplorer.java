@@ -28,14 +28,11 @@ public class FileExplorer {
         File[] filesAndFolders = rootDirectory.listFiles();
         if (filesAndFolders != null) {
             Arrays.sort(filesAndFolders);
-            for (File f :
-                    filesAndFolders) {
-                if (f.isFile()) {
+            for (File f : filesAndFolders) {
+                if (f.isFile())
                     transformer.transform(f);
-                }
-                if (f.isDirectory()) {
+                if (f.isDirectory())
                     this.explore(f);
-                }
             }
         }
     }
