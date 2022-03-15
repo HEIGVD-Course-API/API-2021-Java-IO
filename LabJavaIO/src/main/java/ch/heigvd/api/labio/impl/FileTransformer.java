@@ -1,6 +1,11 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.NoOpCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,22 +29,39 @@ public class FileTransformer {
      * Before writing each character to the output file, the transformer calls
      * a character transformer to transform the character before writing it to the output.
      */
+    // Instantiate transformers needed later
+    LineNumberingCharTransformer lineTransformer = new LineNumberingCharTransformer();
+    UpperCaseCharTransformer upperTransformer = new UpperCaseCharTransformer();
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
-     *  Later, replace it by a combination of the UpperCaseCharTransformer
-     *  and the LineNumberCharTransformer.
-     */
-    // ... transformer = ...
-
-    /* TODO: implement the following logic here:
-     *  - open the inputFile and an outputFile
-     *    Use UTF-8 encoding for both.
-     *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
-     *  - Copy all characters from the input file to the output file.
-     *  - For each character, apply a transformation: start with NoOpCharTransformer,
-     *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
-     */
-    try {
+    // Create a buffered reader
+    try ( BufferedReader br = new BufferedReader(new FileReader(inputFile,  StandardCharsets.UTF_8))){
+      // Create outputfile
+      File outputFile = new File(inputFile + ".out");
+      // Create buffered writer
+      BufferedWriter bw = new BufferedWriter(new FileWriter(outputFile, StandardCharsets.UTF_8));
+      // Variables need from conversion from int -> char -> String during read/write operation
+      int charsRead = 0;
+      char c;
+      String cString;
+      // While there is something to read
+      while(br.ready()){
+        // Read the file char by char
+        charsRead = br.read();
+        // Cast to char
+        c = (char) charsRead;
+        // Cast to String
+        cString = String.valueOf(c);
+        // Apply transformations
+        cString = upperTransformer.transform(cString);
+        cString = lineTransformer.transform(cString);
+        // Write transformed char to file
+        bw.write(cString);
+        // Flush output buffer
+        bw.flush();
+      }
+      // Close the reader and writer
+      br.close();
+      bw.close();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);
