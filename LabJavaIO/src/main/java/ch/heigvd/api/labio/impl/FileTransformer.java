@@ -27,12 +27,9 @@ public class FileTransformer {
             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(inputFile.getAbsolutePath() + ".out"), StandardCharsets.UTF_8);
             ){
       int i;
-      while((i = isr.read()) != -1){
-        byte[] byte_ = new byte[1];
-        byte_[0] = Integer.valueOf(i).byteValue();
-        String toTransform = new String(byte_, StandardCharsets.UTF_8);
+      while(isr.ready()){
+        String toTransform = String.valueOf((char) isr.read());
         String transformed = upperCaseCharTransformer.transform(lineNumberingCharTransformer.transform(toTransform));
-        System.out.println(transformed);
         osw.write(transformed);
       }
     } catch (Exception ex) {
