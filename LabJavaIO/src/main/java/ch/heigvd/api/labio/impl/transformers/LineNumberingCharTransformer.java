@@ -22,17 +22,20 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* Done: implement the transformation here.
      */
+    String res = "";
     if(index == 0){
-      return (++index) + ". " + (c.equals("\r") ? "" : c);
+      res = (++index) + ". ";
     }
     if(c.equals("\r")) {
-      System.out.println("Remove carriage return!");
-      return "";
+      return res;
     }
+
     if (c.equals("\n")){
-      return "\n" + (index++) + ". ";
+      res += "\n" + (++index) + ". ";
+    } else {
+      res += c;
     }
-    return c;
+    return res;
     // throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
 }

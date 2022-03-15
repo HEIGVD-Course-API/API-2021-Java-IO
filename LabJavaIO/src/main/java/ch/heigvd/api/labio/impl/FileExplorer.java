@@ -14,6 +14,8 @@ import java.util.Arrays;
 public class FileExplorer {
 
     public void explore(File rootDirectory) {
+        if(!rootDirectory.isDirectory())
+            return;
         FileTransformer transformer = new FileTransformer();
 
         /* Done: implement the logic to explore the rootDirectory.
