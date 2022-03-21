@@ -1,6 +1,10 @@
 package ch.heigvd.api.labio.impl;
 
-import java.io.File;
+import ch.heigvd.api.labio.impl.transformers.LineNumberingCharTransformer;
+import ch.heigvd.api.labio.impl.transformers.UpperCaseCharTransformer;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,13 +29,14 @@ public class FileTransformer {
      * a character transformer to transform the character before writing it to the output.
      */
 
-    /* TODO: first start with the NoOpCharTransformer which does nothing.
+    /* OK TODO: first start with the NoOpCharTransformer which does nothing.
      *  Later, replace it by a combination of the UpperCaseCharTransformer
      *  and the LineNumberCharTransformer.
      */
-    // ... transformer = ...
+    UpperCaseCharTransformer upperCase = new UpperCaseCharTransformer();
+    LineNumberingCharTransformer lineNumber = new LineNumberingCharTransformer();
 
-    /* TODO: implement the following logic here:
+    /* OK TODO: implement the following logic here:
      *  - open the inputFile and an outputFile
      *    Use UTF-8 encoding for both.
      *    Filename of the output file: <inputFile-Name>.out (that is add ".out" at the end)
@@ -39,7 +44,33 @@ public class FileTransformer {
      *  - For each character, apply a transformation: start with NoOpCharTransformer,
      *    then later replace it with a combination of UpperCaseFCharTransformer and LineNumberCharTransformer.
      */
-    try {
+    try (
+            // reader
+            Reader reader = new InputStreamReader(
+                    new FileInputStream(inputFile),
+                    StandardCharsets.UTF_8
+            );
+
+            // writer
+            Writer writer = new OutputStreamWriter(
+                    new FileOutputStream(String.format("%s.out", inputFile.getAbsolutePath())),
+                    StandardCharsets.UTF_8
+            )
+    ) {
+
+      while (reader.ready()) {
+        writer.write(  // write the transformed string
+                lineNumber.transform(  // add line numbering
+                        upperCase.transform(  // transform to upper case
+                                String.valueOf(  // string of the character read
+                                        (char)reader.read()
+                                )
+                        )
+                )
+        );
+      }
+
+      writer.flush();
 
     } catch (Exception ex) {
       LOG.log(Level.SEVERE, "Error while reading, writing or transforming file.", ex);

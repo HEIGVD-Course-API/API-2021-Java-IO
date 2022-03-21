@@ -1,5 +1,6 @@
 package ch.heigvd.api.labio.impl.transformers;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -12,8 +13,8 @@ public class UpperCaseCharTransformer {
   private static final Logger LOG = Logger.getLogger(UpperCaseCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
+    /* OK TODO: implement the transformation here.
      */
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    return c.toUpperCase(Locale.ENGLISH);
   }
 }
