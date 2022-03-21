@@ -135,10 +135,12 @@ public class Application {
      *   using an output stream.
      *   Write the file with encoding UTF-8.
      */
-    OutputStreamWriter osw = new OutputStreamWriter(
+    try(OutputStreamWriter osw = new OutputStreamWriter(
             new FileOutputStream(file), StandardCharsets.UTF_8
-    );
-    osw.write(quote.getQuote());
+    )) {
+      osw.write(quote.getQuote());
+      osw.flush();
+    }
 
   }
   
