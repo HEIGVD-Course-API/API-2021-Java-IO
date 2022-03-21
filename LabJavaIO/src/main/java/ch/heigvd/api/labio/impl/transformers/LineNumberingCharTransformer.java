@@ -24,22 +24,23 @@ public class LineNumberingCharTransformer {
   public String transform(String c) {
     /* OK TODO: implement the transformation here.
      */
-    // add first line number
-    if (lineNumber == 1) {
-      return String.format("%d. %s", lineNumber++, c);
-    }
 
-    // delete Windows-style line endings
+    // first, delete Windows-style line endings
     if (c.equals("\r")) {
       return "";
     }
 
-    // keep UNIX-style line ending and add next line's number
-    if (c.equals("\n")) {
-      return String.format("%d. %s", lineNumber++, c);
+    // begin with the character as the result
+    String result = c;
+    // add first line number if necessary
+    if (lineNumber == 1) {
+      result = String.format("%d. %s", lineNumber++, result);
     }
-
-    // if not a line ending, simply return the character
-    return c;
+    // keep UNIX-style line ending and add next line's number
+    if (result.endsWith("\n")) {
+      result = String.format("%s%d. ", result, lineNumber++);
+    }
+    // return the result
+    return result;
   }
 }
