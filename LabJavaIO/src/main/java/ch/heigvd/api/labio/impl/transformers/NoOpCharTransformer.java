@@ -12,7 +12,7 @@ public class NoOpCharTransformer {
   private static final Logger LOG = Logger.getLogger(NoOpCharTransformer.class.getName());
 
   public String transform(String c) {
-    /* TODO: implement the transformation here.
+    /* OK TODO: implement the transformation here.
      */
     return c;
   }
