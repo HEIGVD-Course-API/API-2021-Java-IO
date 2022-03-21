@@ -16,7 +16,7 @@ public class FileExplorer {
     public void explore(File rootDirectory) {
         FileTransformer transformer = new FileTransformer();
 
-        /* TODO: implement the logic to explore the rootDirectory.
+        /* OK TODO: implement the logic to explore the rootDirectory.
          *  Use the Java JDK documentation to see:
          *  - how to get the files and directories of rootDirectory (which is of class File)
          *  - to sort the items (files and directories) alphabetically
